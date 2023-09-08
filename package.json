@@ -1,0 +1,67 @@
+{
+  "name": "unocss-preset-starter",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@8.7.0",
+  "description": "<description>",
+  "author": "unpreset <https://github.com/unpreset>",
+  "license": "MIT",
+  "homepage": "https://github.com/unpreset/unocss-preset-starter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unpreset/unocss-preset-starter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/unpreset/unocss-preset-starter/issues"
+  },
+  "keywords": [
+    "unocss",
+    "unpreset",
+    "unocss-preset",
+    "unocss-preset-starter"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "prepublishOnly": "pnpm run build",
+    "release": "bumpp --commit --push --tag && pnpm publish",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest",
+    "test:update": "vitest --update"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.41.0",
+    "@babel/types": "^7.22.11",
+    "@types/node": "^20.5.9",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.48.0",
+    "typescript": "5.1.6",
+    "unbuild": "^2.0.0",
+    "unocss": "latest",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.3"
+  }
+}
