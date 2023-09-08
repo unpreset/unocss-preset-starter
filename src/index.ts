@@ -1,4 +1,4 @@
-import { definePreset, type Preset } from 'unocss'
+import { type Preset, definePreset } from 'unocss'
 
 export function presetStarter(): Preset {
   return definePreset({
