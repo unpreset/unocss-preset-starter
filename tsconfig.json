@@ -9,10 +9,14 @@
     "esModuleInterop": true,
     "lib": [
       "esnext"
-    ]
+    ],
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "composite": true
   },
   "exclude": [
-    "node_modules",
-    "dist"
+    "**/dist/**",
+    "**/node_modules/**"
   ]
 }

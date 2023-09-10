@@ -50,7 +50,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vitest",
-    "test:update": "vitest --update"
+    "test:update": "vitest --update",
+    "play": "npm -C playground run dev"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.41.0",
