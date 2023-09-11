@@ -17,6 +17,9 @@ importers:
       '@types/node':
         specifier: ^20.5.9
         version: 20.5.9
+      '@vitejs/plugin-vue':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@4.4.9)(vue@3.3.4)
       bumpp:
         specifier: ^9.2.0
         version: 9.2.0
