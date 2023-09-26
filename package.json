@@ -51,12 +51,14 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest",
     "test:update": "vitest --update",
-    "play": "npm -C playground run dev"
+    "play": "vite playground",
+    "deploy": "vite build playground"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.41.0",
     "@babel/types": "^7.22.11",
     "@types/node": "^20.5.9",
+    "@vitejs/plugin-vue": "^4.3.4",
     "bumpp": "^9.2.0",
     "eslint": "^8.48.0",
     "typescript": "5.1.6",
