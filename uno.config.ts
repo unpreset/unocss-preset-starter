@@ -1,10 +1,13 @@
-import { defineConfig } from 'unocss'
+import { defineConfig, presetUno } from 'unocss'
 import { presetStarter } from './src'
 
 // Just for Vscode Extension
 
 export default defineConfig({
   presets: [
-    presetStarter(),
+    presetUno(),
+    presetStarter({
+      maxSpan: 24,
+    }),
   ],
 })
