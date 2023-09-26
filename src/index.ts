@@ -1,34 +1,28 @@
-import type { Preset } from '@unocss/core'
 import { definePreset } from '@unocss/core'
 
 export interface StarterOptions {
-  maxSpan?: number
+  span?: number
 }
 
-export const presetStarter = definePreset((_options: StarterOptions = {}): Preset => {
-  const maxSpan = _options.maxSpan || 12
+export const presetStarter = definePreset((_options: StarterOptions = {}) => {
+  const span = _options.span || 12
 
   return {
     name: 'unocss-preset-starter',
+    // Customize your preset here
     rules: [
       ['custom-rule', { color: 'red' }],
       [
         /col-(\d+)/,
-        ([_, span]) => ({
-          width: `calc(${span} / ${maxSpan} * 100%)`,
-        }),
-        {
-          autocomplete: 'col-<span>',
-        },
+        ([_, s]) => ({ width: `calc(${s} / ${span} * 100%)` }),
+        { autocomplete: 'col-<span>' },
       ],
     ],
+    // Customize AutoComplete
     autocomplete: {
-      // custom shorthand
       shorthands: {
-        span: Array.from({ length: maxSpan }, (_, i) => `${i + 1}`),
+        span: Array.from({ length: span }, (_, i) => `${i + 1}`),
       },
     },
-
-    // Customize your preset here
   }
 })

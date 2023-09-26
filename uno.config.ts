@@ -7,7 +7,7 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetStarter({
-      maxSpan: 24,
+      span: 24,
     }),
   ],
 })
