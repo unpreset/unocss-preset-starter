@@ -1,28 +1,38 @@
 import { definePreset } from '@unocss/core'
 
-export interface StarterOptions {
-  span?: number
-}
 
-export const presetStarter = definePreset((_options: StarterOptions = {}) => {
-  const span = _options.span || 12
+export const presetStarter = definePreset(() => {
+
 
   return {
-    name: 'unocss-preset-starter',
-    // Customize your preset here
+    name: 'unocss-jojo',
+ 
     rules: [
-      ['custom-rule', { color: 'red' }],
-      [
-        /col-(\d+)/,
-        ([_, s]) => ({ width: `calc(${s} / ${span} * 100%)` }),
-        { autocomplete: 'col-<span>' },
-      ],
+     [
+			/^flex\|([0-9])\|([0-9])\|?([a-z0-9%]{2,})?$/,
+			([, grow, shrink, basis]:[
+					unknown,
+					number,
+					number,
+					string
+				]) => {
+				// let [, grow, shrink, basis] = match as [
+				// 	unknown,
+				// 	number,
+				// 	number,
+				// 	string
+				// ];
+				if (Number(basis) && !basis.includes("%")) {
+					basis &&= `${Number(basis) / 4}rem`;
+				}
+				basis ??= "auto";
+				return {
+					flex: `${grow} ${shrink} ${basis}`,
+				};
+			},
+		],
     ],
     // Customize AutoComplete
-    autocomplete: {
-      shorthands: {
-        span: Array.from({ length: span }, (_, i) => `${i + 1}`),
-      },
-    },
+
   }
 })
