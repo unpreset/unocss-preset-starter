@@ -132,18 +132,18 @@ export const presetStarter = definePreset((): Preset => {
 				{ autocomplete: "px|py|mx|my-<num>-<num>" },
 			],
 			[
-				/^size-(\d+)$/,
+				/^size-(\d+)-?(\d+)?$/,
 				(match) => {
-					let [, s] = match as [unknown, number];
+					let [, s, optional] = match as [unknown, number,number];
 					const sizeInRem: number = s / 4;
 					return [
 						{
 							"block-size": `${sizeInRem}rem`,
-							"inline-size": `${sizeInRem}rem`,
-						},
-					];
+							"inline-size": optional ? `${optional/4}rem`:`${sizeInRem}rem`,
+						}
+					]
 				},
-				{ autocomplete: "size-<num>" },
+				{ autocomplete: "size-<num>-<num>" },
 			],
 			[
 				/^(mx|my)-trim$/,
