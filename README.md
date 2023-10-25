@@ -18,6 +18,7 @@ export default defineConfig({
   ],
 })
 ```
+![flexbox](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/f498deac-e3b2-40b0-96f6-a73c37f85553)
 
 ```html
 px-6-10 = pl-6 pr-10
