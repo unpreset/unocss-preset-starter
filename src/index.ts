@@ -19,8 +19,8 @@ export const presetStarter = definePreset((): Preset => {
 		rules: [
 			[
 				/^family-([a-zA-Z_]*)$/,
-				([, c]) => {
-					c = c.replace("_", " ");
+				([, c]:[null,string]) => {
+					c ??= c.replace("_", " ");
 					return {
 						"font-family": `${c}, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
 					};
@@ -47,7 +47,7 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^flex-(row|col)-([1-9])$/,
-				(match) => {
+				(match:unknown[]) => {
 					const [, direction, number] = match as [
 						unknown,
 						"row" | "col",
@@ -68,9 +68,12 @@ export const presetStarter = definePreset((): Preset => {
 						number,
 						readonly [PositionProps, PositionProps]
 					>;
-
-					const columORrow: "column" | "row" =
-						direction === "row" ? "row" : "column";
+					type Direction<T extends "row" | "col"> = T extends "col" ? "column" : "row";
+				
+					const columORrow: Direction<typeof direction> =
+						direction === "row"
+							? "row"
+							: "column";
 
 					const [justify, align] = positions[number as keyof typeof positions];
 
@@ -94,7 +97,7 @@ export const presetStarter = definePreset((): Preset => {
 						number | "auto",
 						number | "auto",
 					];
-					const isPadding = PaddingOrMargin === "m" ? false : (true as boolean);
+					const isPadding: boolean = PaddingOrMargin === "m" ? false : true;
 					const List: string[] = [];
 					for (const e of [t, r, b, l].filter(Boolean)) {
 						if (!e || e === "auto") {
@@ -121,7 +124,7 @@ export const presetStarter = definePreset((): Preset => {
 						py: "padding-block",
 						mx: "margin-inline",
 						my: "margin-block",
-					} as const satisfies Record<string, string>;
+					} as const satisfies Record<typeof direction, string>;
 
 					const returndirection = combination[direction];
 
@@ -133,8 +136,8 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^size-(\d+)-?(\d+)?$/,
-				(match) => {
-					let [, s, optional] = match as [unknown, number,number];
+				([, s, optional]:[unknown, number,number]):Record<"block-size"|"inline-size",string>[] => {
+					//let [, s, optional] = match as [unknown, number,number];
 					const sizeInRem: number = s / 4;
 					return [
 						{
@@ -147,21 +150,26 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^(mx|my)-trim$/,
-				(match) => {
-					let [, s] = match as [unknown, "mx" | "my"];
+				([, s]: [unknown, "mx" | "my"]): Record<"margin-trim","inline"|"block">[] => {
+					//let [, s] = match as [unknown, "mx" | "my"];
 
-					interface Dictionary {
-						mx: "inline";
-						my: "block";
-						fn(x: "mx" | "my"): "inline" | "block";
-					}
-					const dictionary: Dictionary = {
+				type ReturnFunction<T extends "mx" | "my"> = (x: T) => T extends "mx" ? "inline" : "block";
+
+				interface Dictionary {
+					mx: "inline";
+					my: "block";
+				} 
+
+					type DictionaryWithFn = Dictionary & { fn: ReturnFunction<"mx" | "my"> };
+
+					const dictionary: DictionaryWithFn  = {
 						mx: "inline",
 						my: "block",
 						fn(x) {
 							return this[x];
 						},
 					};
+
 					return [
 						{
 							"margin-trim": dictionary.fn(s),
@@ -174,7 +182,7 @@ export const presetStarter = definePreset((): Preset => {
 		shortcuts: [
 			[
 				/^(font|bg|border|stroke|outline|ring|divide|text)-\[(.*)\]$/,
-				(match) => {
+				(match):string => {
 					const [, category, stringElement] = match as [
 						unknown,
 						Category,

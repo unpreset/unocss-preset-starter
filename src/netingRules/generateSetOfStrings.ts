@@ -12,7 +12,7 @@ const generateSetOfStrings = (category: string, obj_Before_Css: NestedElementRes
 
 	let { cssInside } = obj_Before_Css;
 
-	cssInside.flatMap((e, index) => {
+	cssInside.flatMap((e) => {
 		const temporaryMap = new Map();
 
 		if (Object.hasOwn(obj_Before_Css, "before") || e.length > 1) {
