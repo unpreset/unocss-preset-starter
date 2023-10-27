@@ -14,7 +14,7 @@ export function lastJoin(x: Set<string>): string {
  */
 export function joinArray(array: string[][]): string {
 	if (array.length === 2) {
-		let [state, catANDcss] = array as [Before[], [Category, string]];
+		const [state, catANDcss] = array as [Before[], [Category, string]];
 		const result: [string, `${Category}-${string}`] = [state.join(":"), `${catANDcss[0]}-${catANDcss[1]}`];
 		return result.join(":");
 	} else if (array.length === 1) {
@@ -56,7 +56,7 @@ export const splitString = (arg_splitString: string): Set<string> => {
 		return string.trim().replace(/,+/g, " ").replace(/\s+/g, ",").replace(/\|/g, ",");
 	};
 	const result: Set<string> = new Set();
-	let parenthesesCount: boolean = true;
+	let parenthesesCount = true;
 	let currentElement: currentElement<typeof parenthesesCount> = "";
 
 	for (const char of removeSpaceInString(arg_splitString)) {
