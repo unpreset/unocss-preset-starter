@@ -121,22 +121,25 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^(mx|my)-trim$/,
-				([, s]: [unknown, "mx" | "my"]): Record<"margin-trim", "inline" | "block">[] => {
-					//let [, s] = match as [unknown, "mx" | "my"];
+				([, s]: [unknown, "mx" | "my" | "mt" | "mb" | "ml" | "mr"]): Record<"margin-trim", string>[] => {
 					const dictionary = {
 						mx: "inline",
-						my: "block"						
-					} as const satisfies Record<string,string>
+						my: "block",
+						mt: "block-start",
+						mb: "block-end",
+						ml: "inline-start",
+						mr: "inline-end",
+					} as const satisfies Record<string, string>;
 
-					const resultFunction = (x:keyof typeof dictionary) => dictionary[x]
-					
+					const resultFunction = (x: keyof typeof dictionary) => dictionary[x];
+
 					return [
 						{
 							"margin-trim": resultFunction(s),
 						},
 					];
 				},
-				{ autocomplete: "mx|px-trim" },
+				{ autocomplete: "mx|my|mt|mb|ml|mr-trim" },
 			],
 		] as Rule[],
 		shortcuts: [
