@@ -120,8 +120,8 @@ export const presetStarter = definePreset((): Preset => {
 				{ autocomplete: "size-<num>-<num>" },
 			],
 			[
-				/^(mx|my)-trim$/,
-				([, s]: [unknown, "mx" | "my" | "mt" | "mb" | "ml" | "mr"]): Record<"margin-trim", string>[] => {
+				/^(mx|my|mt|mb|ml|mr)-trim$/,
+				([, s]: [unknown, "mx" | "my" | "mt" | "mb" | "ml" | "mr"]): Record<"margin-trim", "inline" | "block" | "block-start" | "block-end" | "inline-start" | "inline-end">[] => {
 					const dictionary = {
 						mx: "inline",
 						my: "block",
