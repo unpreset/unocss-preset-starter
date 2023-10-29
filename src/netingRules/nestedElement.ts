@@ -11,7 +11,7 @@ function nestedElement(x: string): NestedElementResult | Omit<NestedElementResul
 			_before: match?.groups?.before,
 			_string: match?.groups?.cssInside,
 
-			get beforefn(): Array<String> {
+			get beforefn(): Array<string> {
 				if (this._before) {
 					return removeDuplicates(this._before.split(":"));
 				}
