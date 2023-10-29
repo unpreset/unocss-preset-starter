@@ -43,8 +43,7 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^flex-(row|col)-([1-9])$/,
-				(match: unknown[]) => {
-					const [, direction, number] = match as [unknown, "row" | "col", number];
+				([, direction, flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]) => {
 					type PositionProps = Readonly<"start" | "center" | "end">;
 					const positions = {
 						1: ["start", "start"],
@@ -56,11 +55,11 @@ export const presetStarter = definePreset((): Preset => {
 						7: ["start", "end"],
 						8: ["center", "end"],
 						9: ["end", "end"],
-					} as const satisfies Record<number, readonly [PositionProps, PositionProps]>;
+					} as const satisfies Record<typeof flexNumber, readonly [PositionProps, PositionProps]>;
 					type Direction<T extends "row" | "col"> = T extends "col" ? "column" : "row";
 					const columORrow: Direction<typeof direction> = direction === "row" ? "row" : "column";
 
-					const [justify, align] = positions[number as keyof typeof positions];
+					const [justify, align] = positions[flexNumber];
 
 					return {
 						display: "flex",
@@ -77,7 +76,7 @@ export const presetStarter = definePreset((): Preset => {
 					const [, PaddingOrMargin, t, r, b, l] = match as [unknown, "p" | "m", number, number, number | "auto", number | "auto"];
 					type isPad<T extends typeof PaddingOrMargin> = T extends "m" ? false : true;
 
-					const isPadding = (<T extends "p" | "m">(x: T): isPad<T> => {
+					const isPadding = (<T extends "p" | "m">(x: T) => {
 						return (x === "p") as isPad<T>;
 					})(PaddingOrMargin);
 
@@ -134,7 +133,7 @@ export const presetStarter = definePreset((): Preset => {
 						mb: "block-end",
 						ml: "inline-start",
 						mr: "inline-end",
-					} as const satisfies Record<string, string>;
+					} as const satisfies Record<typeof s, string>;
 
 					const resultFunction = (x: keyof typeof dictionary) => dictionary[x];
 
