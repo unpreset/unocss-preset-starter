@@ -156,6 +156,7 @@ export const presetStarter = definePreset((): Preset => {
 					}
 					return result;
 				},
+				{ autocomplete: "vertical-rl|lr" },
 			],
 		] as Rule[],
 		shortcuts: [
