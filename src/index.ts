@@ -39,6 +39,7 @@ export const presetStarter = definePreset((): Preset => {
 						flex: `${grow} ${shrink} ${basis}`,
 					};
 				},
+				{ autocomplete: "flex|<num>|<num>|(<num>|auto)" },
 			],
 			[
 				/^flex-(row|col)-([1-9])$/,
@@ -57,7 +58,6 @@ export const presetStarter = definePreset((): Preset => {
 						9: ["end", "end"],
 					} as const satisfies Record<number, readonly [PositionProps, PositionProps]>;
 					type Direction<T extends "row" | "col"> = T extends "col" ? "column" : "row";
-
 					const columORrow: Direction<typeof direction> = direction === "row" ? "row" : "column";
 
 					const [justify, align] = positions[number as keyof typeof positions];
@@ -75,7 +75,12 @@ export const presetStarter = definePreset((): Preset => {
 				/^(p|m)-(\d+)-(\d+)?-?(\d+|auto)?-?(\d+|auto)?$/,
 				(match) => {
 					const [, PaddingOrMargin, t, r, b, l] = match as [unknown, "p" | "m", number, number, number | "auto", number | "auto"];
-					const isPadding: boolean = PaddingOrMargin === "m" ? false : true;
+					type isPad<T extends typeof PaddingOrMargin> = T extends "m" ? false : true;
+
+					const isPadding = (<T extends "p" | "m">(x: T): isPad<T> => {
+						return (x === "p") as isPad<T>;
+					})(PaddingOrMargin);
+
 					const List: string[] = [];
 					for (const e of [t, r, b, l].filter(Boolean)) {
 						if (!e || e === "auto") {
@@ -140,6 +145,17 @@ export const presetStarter = definePreset((): Preset => {
 					];
 				},
 				{ autocomplete: "mx|my|mt|mb|ml|mr-trim" },
+			],
+			[
+				/^vertical-(rl|lr)$/,
+				([, rl_lr]: [unknown, "rl" | "lr"]): Record<string, `vertical-${typeof rl_lr}`> => {
+					const returnArr: string[] = ["-webkit-writing-mode", "-ms-writing-mode", "writingMode"];
+					const result: Record<string, `vertical-${typeof rl_lr}`> = {};
+					for (const e of returnArr) {
+						result[e] = `vertical-${rl_lr}`;
+					}
+					return result;
+				},
 			],
 		] as Rule[],
 		shortcuts: [

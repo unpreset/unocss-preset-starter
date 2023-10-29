@@ -1,7 +1,7 @@
 {
   "name": "unocss-preset-starter",
   "type": "module",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "packageManager": "pnpm@8.7.0",
   "description": "<description>",
   "author": "unpreset <https://github.com/unpreset>",
@@ -45,12 +45,10 @@
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "bun run build",
     "release": "pnpm publish --no-git-checks ",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest",
-    "test:update": "vitest --update",
     "play": "vite playground",
     "deploy": "vite build playground"
   },
