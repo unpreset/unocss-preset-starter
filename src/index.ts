@@ -1,6 +1,9 @@
 import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
 import { Tailwind } from "./netingRules";
+import { replace } from 'string-ts'
+
+
 /**
  * Liste des category available
  *
@@ -20,7 +23,8 @@ export const presetStarter = definePreset((): Preset => {
 			[
 				/^family-([a-zA-Z_]*)$/,
 				([, c]: [null, string]) => {
-					c &&= c.replace("_", " ");
+					c &&= replace(c,"_", " ");
+
 					return {
 						"font-family": `${c}, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
 					};
@@ -43,7 +47,7 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^flex-(row|col)-([1-9])$/,
-				([, direction, flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]) => {
+				([, direction, flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): Record<string,string> => {
 					type PositionProps = Readonly<"start" | "center" | "end">;
 					const positions = {
 						1: ["start", "start"],

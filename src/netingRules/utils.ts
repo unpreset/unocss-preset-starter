@@ -1,3 +1,4 @@
+import { includes, split,trim } from 'string-ts'
 /**
  * Description: join Set to make a string used at end of script
  * @param {Set<string>} 'list of Set of class
@@ -30,12 +31,12 @@ export function joinArray(array: string[][]): string {
  * @returns {string[][]} Array of string or throw an error
  */
 export const splitInsideBrakets = (x: string): string[][] | never => {
-	if (!["[", "]", "(", ")"].some((e) => x.includes(e))) {
-		if ([",", ":"].some((e) => x.includes(e))) {
+	if (!["[", "]", "(", ")"].some((e) => includes(x,e))) {
+		if ([",", ":"].some((e) => includes(x,e))) {
 			const result: string[][] = [];
-			const temp: string[] = removeDuplicates(x.split(","));
+			const temp: string[] = removeDuplicates(split(x,","));
 			for (const e of temp) {
-				result.push(removeDuplicates(e.split(":")));
+				result.push(removeDuplicates(split(e, ":")));
 			}
 			return result;
 		} else {
@@ -51,9 +52,10 @@ export const splitInsideBrakets = (x: string): string[][] | never => {
  * @param {string} arg_splitString
  * @returns {Set<string>}
  */
+
 export const splitString = (arg_splitString: string): Set<string> => {
 	const removeSpaceInString = (string: string): string => {
-		return string.trim().replace(/,+/g, " ").replace(/\s+/g, ",").replace(/\|/g, ",");
+		return trim(string).replace(/,+/g, " ").replace(/\s+/g, ",").replace(/\|/g, ",");
 	};
 	const result: Set<string> = new Set();
 	let parenthesesCount = true;
@@ -69,10 +71,10 @@ export const splitString = (arg_splitString: string): Set<string> => {
 			result.add(currentElement.toLowerCase().trim());
 			currentElement &&= "";
 		} else {
-			currentElement += char.trim();
+			currentElement += trim(char);
 		}
 	}
-	if (currentElement.trim() !== "") {
+	if (trim(currentElement) !== "") {
 		result.add(currentElement.toLowerCase().trim());
 	}
 
