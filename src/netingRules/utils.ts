@@ -1,11 +1,11 @@
-import { includes, split,trim } from 'string-ts'
+import { includes, split,trim,toLowerCase,join } from 'string-ts'
 /**
  * Description: join Set to make a string used at end of script
  * @param {Set<string>} 'list of Set of class
  * @returns {string} make one string with space all tailwind class
  */
 export function lastJoin(x: Set<string>): string {
-	return [...x].join(" ");
+	return join([...x]," ");
 }
 
 /**
@@ -16,10 +16,10 @@ export function lastJoin(x: Set<string>): string {
 export function joinArray(array: string[][]): string {
 	if (array.length === 2) {
 		const [state, catANDcss] = array as [Before[], [Category, string]];
-		const result: [string, `${Category}-${string}`] = [state.join(":"), `${catANDcss[0]}-${catANDcss[1]}`];
-		return result.join(":");
+		const result: [string, `${Category}-${string}`] = [join(state,":"), `${catANDcss[0]}-${catANDcss[1]}`];
+		return join(result,":");
 	} else if (array.length === 1) {
-		return array[0].join("-") as `${Category}-${string}`;
+		return join(array[0],"-") as `${Category}-${string}`;
 	} else {
 		throw new Error("limite 2 arrays joinArray");
 	}
@@ -75,7 +75,7 @@ export const splitString = (arg_splitString: string): Set<string> => {
 		}
 	}
 	if (trim(currentElement) !== "") {
-		result.add(currentElement.toLowerCase().trim());
+		result.add(trim(toLowerCase(currentElement)));
 	}
 
 	return result;
