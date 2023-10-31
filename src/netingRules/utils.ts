@@ -68,7 +68,7 @@ export const splitString = (arg_splitString: string): Set<string> => {
 			parenthesesCount = true;
 		}
 		if (char === "," && parenthesesCount === true) {
-			result.add(currentElement.toLowerCase().trim());
+			result.add(trim(toLowerCase(currentElement)));
 			currentElement &&= "";
 		} else {
 			currentElement += trim(char);
