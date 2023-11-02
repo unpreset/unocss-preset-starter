@@ -94,39 +94,31 @@ export const presetStarter = definePreset((): Preset => {
 				{ autocomplete: "p|m-<num>-<num>-<num>-<num>" },
 			],
 			[
-				/^(px|py|mx|my)-(\d+)-?(\d+)?$/,
+				/^inset-(x|y)-(\d+)-?(\d+)?$|^(px|py|mx|my)-(\d+)-?(\d+)?$/,
 				(match) => {
-					const [, direction, s, optional] = match as [unknown, "px" | "py" | "mx" | "my", number, number];
+					const [, direction, s, optional] = match as [unknown, "px" | "py" | "mx" | "my" | "x" | "y", number, number];
 					const combination = {
 						px: "padding-inline",
 						py: "padding-block",
 						mx: "margin-inline",
 						my: "margin-block",
-					} as const satisfies Record<typeof direction, string>;
-
-					const returndirection = combination[direction];
-
-					let value = `${Number(s) / 4}em`;
-					value += optional ? ` ${+optional / 4}em` : "";
-					return { [returndirection]: value };
-				},
-				{ autocomplete: "px|py|mx|my-<num>-<num>" },
-			],
-			[
-				/^inset-(x|y)-(\d+)-?(\d+)?$/,
-				([, direction, s, optional]:[unknown, "x" | "y" , number, number]) => {
-					const combination = {
 						x: "inset-inline",
 						y: "inset-block",
 					} as const satisfies Record<typeof direction, string>;
 
 					const returndirection = combination[direction];
 
-					let value = `${Number(s)}%`;
-					value += optional ? ` ${+optional}%` : "";
-					return { [returndirection]: value };
+					if (returndirection === "inset-inline" || returndirection === "inset-block") {
+						let value = `${Number(s)}%`;
+						value += optional ? ` ${+optional}%` : "";
+						return { [returndirection]: value };
+					} else {
+						let value = `${Number(s) / 4}em`;
+						value += optional ? ` ${+optional / 4}em` : "";
+						return { [returndirection]: value };
+					}
 				},
-				{ autocomplete: "inset-x|y-<num>-<num>" },
+				{ autocomplete: "px|py|mx|my-<num>-<num>" },
 			],
 			[
 				/^size-(\d+)-?(\d+)?$/,
