@@ -1,8 +1,7 @@
 import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
 import { Tailwind } from "./netingRules";
-import { replace } from 'string-ts'
-
+import { replace } from "string-ts";
 
 /**
  * Liste des category available
@@ -23,7 +22,7 @@ export const presetStarter = definePreset((): Preset => {
 			[
 				/^family-([a-zA-Z_]*)$/,
 				([, c]: [null, string]) => {
-					c &&= replace(c,"_", " ");
+					c &&= replace(c, "_", " ");
 
 					return {
 						"font-family": `${c}, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
@@ -47,7 +46,7 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^flex-(row|col)-([1-9])$/,
-				([, direction, flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): Record<string,string> => {
+				([, direction, flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): Record<string, string> => {
 					type PositionProps = Readonly<"start" | "center" | "end">;
 					const positions = {
 						1: ["start", "start"],
@@ -112,6 +111,22 @@ export const presetStarter = definePreset((): Preset => {
 					return { [returndirection]: value };
 				},
 				{ autocomplete: "px|py|mx|my-<num>-<num>" },
+			],
+			[
+				/^inset-(x|y)-(\d+)-?(\d+)?$/,
+				([, direction, s, optional]:[unknown, "x" | "y" , number, number]) => {
+					const combination = {
+						x: "inset-inline",
+						y: "inset-block",
+					} as const satisfies Record<typeof direction, string>;
+
+					const returndirection = combination[direction];
+
+					let value = `${Number(s)}%`;
+					value += optional ? ` ${+optional}%` : "";
+					return { [returndirection]: value };
+				},
+				{ autocomplete: "inset-x|y-<num>-<num>" },
 			],
 			[
 				/^size-(\d+)-?(\d+)?$/,
