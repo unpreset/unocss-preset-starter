@@ -107,16 +107,15 @@ export const presetStarter = definePreset((): Preset => {
 					} as const satisfies Record<typeof direction, string>;
 
 					const returndirection = combination[direction];
-
+					let value = "";
 					if (returndirection === "inset-inline" || returndirection === "inset-block") {
-						let value = `${Number(s)}%`;
+						value = `${s}%`;
 						value += optional ? ` ${+optional}%` : "";
-						return { [returndirection]: value };
 					} else {
-						let value = `${Number(s) / 4}em`;
+						value = `${Number(s) / 4}em`;
 						value += optional ? ` ${+optional / 4}em` : "";
-						return { [returndirection]: value };
 					}
+					return { [returndirection]: value };
 				},
 				{ autocomplete: "px|py|mx|my-<num>-<num>" },
 			],
