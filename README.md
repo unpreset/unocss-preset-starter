@@ -31,7 +31,7 @@ export default defineConfig({
   ],
 })
 ```
-![flexbox](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/f498deac-e3b2-40b0-96f6-a73c37f85553)
+
 
 
 
@@ -55,6 +55,7 @@ mx-trim | my-trim | mt-trim = margin-trim:block-end etc...
 
 ```
 ## flexbox shortcut
+![flexbox](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/f498deac-e3b2-40b0-96f6-a73c37f85553)
 Decomposer dans une grille de 1 à 9 la disposition des div 
 
 ```html
