@@ -17,7 +17,7 @@ import { replace } from "string-ts";
 export const presetStarter = definePreset((): Preset => {
 	return {
 		name: "unocssjojo",
-
+		
 		rules: [
 			[
 				/^family-([a-zA-Z_]*)$/,

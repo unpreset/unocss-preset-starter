@@ -37,6 +37,8 @@ export default defineConfig({
 ```html
 px-6-10 = pl-6 pr-10
 mx-6-10 = ml-6 mr-10
+inset-x-6-9 = inset-inline: 6% 9%;
+inset-y-6-9 =  inset-block: 6% 9%;
 m-5-6-9-10
 p-6-4-8-201
 p-6-4
