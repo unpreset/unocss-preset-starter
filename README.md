@@ -1,6 +1,6 @@
 ## Features
 
-Nous aimons la syntaxe tailwind mais cest souvent trop long à lire, aujourd'hui vous pouvez avec unocss et ce preset reduire de 30% la syntaxe tailwind et améliorer la lisibilité du code.
+We like the tailwindcss syntax, but it's often too long to read. Today, with unocss and this preset, you can reduce tailwindcss syntax by 30% and improve code readability.
 ![Reduce 30% tailwind syntax](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/efb0180e-38f5-4360-89f5-92b646995de1)
 
 ### Liste des Shortcuts
@@ -11,7 +11,7 @@ Nous aimons la syntaxe tailwind mais cest souvent trop long à lire, aujourd'hui
 - Size
 - inset-x or inset-y
 - flex-grow flex-shrink flex-basis
-- Compress tailwind Line 35%
+- Compress tailwind Line 30%
 
 ## Usage
 ```shell
@@ -20,7 +20,7 @@ pnpm i -D unocss-preset-starter unocss presetWind
 
 ```ts
 // uno.config.ts
-import {	presetWind, defineConfig } from 'unocss'
+import {presetWind, defineConfig } from 'unocss'
 import { presetStarter } from 'unocss-preset-starter'
 
 export default defineConfig({
@@ -32,11 +32,7 @@ export default defineConfig({
 })
 ```
 
-
-
-
-
-```html
+```md
 px-6-10 = pl-6 pr-10
 mx-6-10 = ml-6 mr-10
 inset-x-6-9 = inset-inline: 6% 9%;
@@ -48,19 +44,39 @@ p-6-4-8
 p-6-4-auto-auto
 flex-col-6 flex-row-1 flex-row-2 flex-row-6 
 text-[red,hover:orange]
-bg-[red,lg:[hover:green],md:pink]
+bg-[red,lg:[hover:green-100,green-600],md:pink]
 flex|10|50|500 = grow-10 shrik-50 basis-500
 size-60 = w-60 h-60
 mx-trim | my-trim | mt-trim = margin-trim:block-end etc...
-
 ```
-## flexbox shortcut
-![flexbox](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/f498deac-e3b2-40b0-96f6-a73c37f85553)
-Decomposer dans une grille de 1 à 9 la disposition des div 
+## Compress 
+### Merge rules for : 
+"font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
+It reqiuere the ```js presetWind()``` to work because it convert to tailwindcss class
+#### from:
+text-[red,hover:orange,md:hover:[green,blue,first:green]]
+#### to:
+text-red hover:text-orange md:hover:text-green md:hover:text-blue md:hover:first:text-green
 
-```html
+
+## Flexbox shortcut
+![flexbox](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/f498deac-e3b2-40b0-96f6-a73c37f85553)
+Decompose the layout of the divs in a grid from 1 to 9.
+
+```md
 flex-row-1 flex-row-2 flex-row-3 flex-row-4 flex-row-5 flex-row-6 flex-row-7 flex-row-8 flex-row-9
 flex-col-1 flex-col-2 flex-col-3 flex-col-4 flex-col-5 flex-col-6 flex-col-7 flex-col-8 flex-col-9
+```
+### unocss to tailwindcss exemple:
+```md
+flex-col-4 = justify-items-start items-center flex flex-col
+```
+```html
+<div class="flex-col-4">
+  <div class="size-20 p-4-2">01</div>
+  <div class="size-20 p-4-2">02</div>
+  <div class="size-20 p-4-2">03</div>
+</div>
 ```
 
 ```css
