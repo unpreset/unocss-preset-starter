@@ -1,6 +1,7 @@
 ## Features
-Reduce 30% tailwind syntax
+
 Nous aimons la syntaxe tailwind mais cest souvent trop long à lire, aujourd'hui vous pouvez avec unocss et ce preset reduire de 30% la syntaxe tailwind et améliorer la lisibilité du code.
+![Reduce 30% tailwind syntax](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/efb0180e-38f5-4360-89f5-92b646995de1)
 
 ### Liste des Shortcuts
 - Flexbox
@@ -8,6 +9,7 @@ Nous aimons la syntaxe tailwind mais cest souvent trop long à lire, aujourd'hui
 - margin-inline / pading-inline
 - margin-trim
 - Size
+- inset-x or inset-y
 - flex-grow flex-shrink flex-basis
 - Compress tailwind Line 35%
 
