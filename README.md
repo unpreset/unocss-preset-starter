@@ -47,17 +47,21 @@ text-[red,hover:orange]
 bg-[red,lg:[hover:green-100,green-600],md:pink]
 flex|10|50|500 = grow-10 shrik-50 basis-500
 size-60 = w-60 h-60
+size-60-80 = w-60 h-80
 mx-trim | my-trim | mt-trim = margin-trim:block-end etc...
 ```
-## Compress 
+## Compress the length of tailwindcss Class
 ### Merge rules for : 
 "font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
 It reqiuere the ```presetWind()``` to work because it convert to tailwindcss class
 #### from:
+```md
 text-[red,hover:orange,md:hover:[green,blue,first:green]]
+```
 #### to:
+```md
 text-red hover:text-orange md:hover:text-green md:hover:text-blue md:hover:first:text-green
-
+```
 
 ## Flexbox shortcut
 ![flexbox](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/f498deac-e3b2-40b0-96f6-a73c37f85553)
