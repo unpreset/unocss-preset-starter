@@ -52,7 +52,7 @@ mx-trim | my-trim | mt-trim = margin-trim:block-end etc...
 ## Compress 
 ### Merge rules for : 
 "font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
-It reqiuere the ```js presetWind()``` to work because it convert to tailwindcss class
+It reqiuere the ```presetWind()``` to work because it convert to tailwindcss class
 #### from:
 text-[red,hover:orange,md:hover:[green,blue,first:green]]
 #### to:
