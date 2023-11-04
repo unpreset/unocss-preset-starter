@@ -79,6 +79,12 @@ flex-col-4 = justify-items-start items-center flex flex-col
 </div>
 ```
 
+
+
+https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/d43fa35e-5c34-400c-bc0c-110752c96d05
+
+
+
 ```css
 .flex-row-2 {
   display: flex;
