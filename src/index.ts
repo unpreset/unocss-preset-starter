@@ -17,7 +17,7 @@ import { replace } from "string-ts";
 export const presetStarter = definePreset((): Preset => {
 	return {
 		name: "unocssjojo",
-		
+
 		rules: [
 			[
 				/^family-([a-zA-Z_]*)$/,
@@ -32,8 +32,7 @@ export const presetStarter = definePreset((): Preset => {
 
 			[
 				/^flex\|([0-9])\|([0-9])\|?([a-z0-9%]{2,})?$/,
-				(match) => {
-					let [, grow, shrink, basis] = match as [unknown, number, number, string | undefined];
+				([, grow, shrink, basis]: [unknown, number, number, string | undefined]) => {
 					basis ??= "auto";
 					if (Number(basis) && !basis.includes("%")) {
 						basis &&= `${Number(basis) / 4}rem`;
@@ -79,8 +78,8 @@ export const presetStarter = definePreset((): Preset => {
 					const [, PaddingOrMargin, t, r, b, l] = match as [unknown, "p" | "m", number, number, number | "auto", number | "auto"];
 					type isPad<T extends typeof PaddingOrMargin> = T extends "m" ? false : true;
 
-					const isPadding = (<T extends "p" | "m">(x: T) => {
-						return (x === "p") as isPad<T>;
+					const isPadding = (<T extends typeof PaddingOrMargin>(x: T) => {
+						return (x === "p") as isPad<"p">;
 					})(PaddingOrMargin);
 
 					const List: string[] = [];
@@ -170,7 +169,7 @@ export const presetStarter = definePreset((): Preset => {
 		] as Rule[],
 		shortcuts: [
 			[
-				/^(font|bg|border|stroke|outline|ring|divide|text)-\[(.*)\]$/,
+				/^(grid|font|bg|border|stroke|outline|ring|divide|text)-\[(.*)\]$/,
 				(match): string => {
 					const [, category, stringElement] = match as [unknown, Category, string];
 					return Tailwind(category, stringElement);

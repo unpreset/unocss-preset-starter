@@ -32,7 +32,7 @@ export default defineConfig({
 })
 ```
 
-```md
+```
 px-6-10 = pl-6 pr-10
 mx-6-10 = ml-6 mr-10
 inset-x-6-9 = inset-inline: 6% 9%;
@@ -45,6 +45,7 @@ p-6-4-auto-auto
 flex-col-6 flex-row-1 flex-row-2 flex-row-6 
 text-[red,hover:orange]
 bg-[red,lg:[hover:green-100,green-600],md:pink]
+grid-[start-1,span-2,lg:[start-1,span-3]]
 flex|10|50|500 = grow-10 shrik-50 basis-500
 size-60 = w-60 h-60
 size-60-80 = w-60 h-80
@@ -79,7 +80,7 @@ flex-col-4 = justify-items-start items-center flex flex-col
 <div class="flex-col-4">
   <div class="size-20 p-4-2">01</div>
   <div class="size-20 p-4-2">02</div>
-  <div class="size-20 p-4-2">03</div>
+  <div class="size-20 p-4-2 text-balanced">03</div>
 </div>
 ```
 

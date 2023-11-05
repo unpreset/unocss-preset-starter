@@ -1,6 +1,6 @@
 type regexArray = RegExpMatchArray | null;
 
-type Category = "font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
+type Category = "grid" | "font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
 type currentElement<T extends boolean> = T extends true ? "" : string;
 
 type Before =
@@ -87,8 +87,6 @@ interface finnalREturn {
 type Mapp = Map<"Category", Category>;
 
 /// flex number 1-9
-type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
-  ? Acc[number]
-  : Enumerate<N, [...Acc, Acc['length']]>
+type Enumerate<N extends number, Acc extends number[] = []> = Acc["length"] extends N ? Acc[number] : Enumerate<N, [...Acc, Acc["length"]]>;
 
-type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
+type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>;
