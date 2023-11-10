@@ -169,7 +169,7 @@ export const presetStarter = definePreset((): Preset => {
 		] as Rule[],
 		shortcuts: [
 			[
-				/^(grid|font|bg|border|stroke|outline|ring|divide|text)-\[(.*)\]$/,
+				/^(grid|font|bg|border|stroke|outline|ring|divide|text|row|col)-\[(.*)\]$/,
 				(match): string => {
 					const [, category, stringElement] = match as [unknown, Category, string];
 					return Tailwind(category, stringElement);

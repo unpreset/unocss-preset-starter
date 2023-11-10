@@ -1,4 +1,5 @@
 import { removeDuplicates, splitInsideBrakets, regex } from "./utils";
+import { split } from "string-ts";
 /**
  * @description   groups: { before: 'lg:hover', cssInside: 'first:red-100,last:green' } ]
  */
@@ -13,7 +14,7 @@ function nestedElement(x: string): NestedElementResult | Omit<NestedElementResul
 
 			get beforefn(): Array<string> {
 				if (this._before) {
-					return removeDuplicates(this._before.split(":"));
+					return removeDuplicates(split(this._before,":"));
 				}
 				return [];
 			},
