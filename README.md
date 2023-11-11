@@ -47,7 +47,8 @@ export default defineConfig({
 | size-60                       | w-60 h-60                                      |
 | size-60-80                    | w-60 h-80                                      |
 | mx-trim \| my-trim \| mt-trim | margin-trim                                    |
-
+| grid-area-one                 | grid-area: one;                                |
+| grid-area-helloWorld          | grid-area: helloWorld;                         |
 ```
 
 text-[red,hover:orange]

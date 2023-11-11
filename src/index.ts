@@ -17,7 +17,6 @@ import { replace } from "string-ts";
 export const presetStarter = definePreset((): Preset => {
 	return {
 		name: "unocssjojo",
-
 		rules: [
 			[
 				/^family-([a-zA-Z_]*)$/,
@@ -166,6 +165,15 @@ export const presetStarter = definePreset((): Preset => {
 				},
 				{ autocomplete: "vertical-rl|lr" },
 			],
+			[
+				/^grid-area-(\w+)$/,
+				([,match]:[undefined,string]): Record<'grid-area', typeof match> => {
+					return {
+						"grid-area": match
+					};
+				},
+				
+			]
 		] as Rule[],
 		shortcuts: [
 			[
