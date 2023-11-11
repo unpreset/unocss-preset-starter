@@ -31,38 +31,37 @@ export default defineConfig({
   ],
 })
 ```
+| Unocss My preset              | tailwind like or CSS                           |
+|-------------------------------|------------------------------------------------|
+| flex\|10\|50\|500             | grow-10 shrik-50 basis-500                     |
+| px-6-10                       | pl-6 pr-10                                     |
+| mx-6-10                       | ml-6 mr-10                                     |
+| inset-x-6-9                   | inset-inline: 6% 9%                            |
+| inset-y-6-9                   | inset-block: 6% 9%                             |
+| m-5-6-9-10                    |                                                |
+| p-6-4-8-201                   |                                                |
+| p-6-4                         | py-6 px-4                                      |
+| p-6-4-8                       |                                                |
+| p-6-4-auto-auto               |                                                |
+| flex-col-4                    | justify-items-start items-center flex flex-col |
+| size-60                       | w-60 h-60                                      |
+| size-60-80                    | w-60 h-80                                      |
+| mx-trim \| my-trim \| mt-trim | margin-trim                                    |
 
 ```
-px-6-10 = pl-6 pr-10
-mx-6-10 = ml-6 mr-10
-inset-x-6-9 = inset-inline: 6% 9%;
-inset-y-6-9 =  inset-block: 6% 9%;
-m-5-6-9-10
-p-6-4-8-201
-p-6-4
-p-6-4-8
-p-6-4-auto-auto
-flex-col-6 flex-row-1 flex-row-2 flex-row-6 
+
 text-[red,hover:orange]
 bg-[red,lg:[hover:green-100,green-600],md:pink]
 grid-[col-start-1,col-span-2,lg:[col-start-1,col-span-3,row-span-12]]
-flex|10|50|500 = grow-10 shrik-50 basis-500
-size-60 = w-60 h-60
-size-60-80 = w-60 h-80
-mx-trim | my-trim | mt-trim = margin-trim:block-end etc...
+
 ```
 ## Compress the length of tailwindcss Class
 ### Merge rules for : 
-"grid"|"font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
+"grid"|"font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide"| "row"| "col";
 It reqiuere the ```presetWind()``` to work because it convert to tailwindcss class
-#### from:
-```md
-text-[red,hover:orange,md:hover:[green,blue,first:green]]
-```
-#### to:
-```md
-text-red hover:text-orange md:hover:text-green md:hover:text-blue md:hover:first:text-green
-```
+| unocss                                                      | Tailwind convertion                                                                         |
+|-------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| text-[red,hover:orange,md:hover:[ green,blue,first:green ]] | text-red hover:text-orange md:hover:text-green md:hover:text-blue md:hover:first:text-green |
 
 ## Flexbox shortcut
 ![flexbox](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/f498deac-e3b2-40b0-96f6-a73c37f85553)
@@ -80,15 +79,11 @@ flex-col-4 = justify-items-start items-center flex flex-col
 <div class="flex-col-4">
   <div class="size-20 p-4-2">01</div>
   <div class="size-20 p-4-2">02</div>
-  <div class="size-20 p-4-2">03</div>
+  <div class="size-20-30 p-4-2 max-h-6">03</div>
 </div>
 ```
 
-
-
 https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/d43fa35e-5c34-400c-bc0c-110752c96d05
-
-
 
 ```css
 .flex-row-2 {
