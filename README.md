@@ -36,6 +36,7 @@ export default defineConfig({
 | flex\|10\|50\|500             | grow-10 shrik-50 basis-500                     |
 | px-6-10                       | pl-6 pr-10                                     |
 | mx-6-10                       | ml-6 mr-10                                     |
+| gap-6-11                      | gap-y-6 gap-x-11                               |
 | inset-x-6-9                   | inset-inline: 6% 9%                            |
 | inset-y-6-9                   | inset-block: 6% 9%                             |
 | m-5-6-9-10                    |                                                |
