@@ -1,7 +1,7 @@
 {
   "name": "unocss-preset-starter",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "packageManager": "pnpm@8.7.0",
   "description": "<description>",
   "author": "unpreset <https://github.com/unpreset>",

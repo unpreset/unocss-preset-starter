@@ -92,31 +92,45 @@ export const presetStarter = definePreset((): Preset => {
 				{ autocomplete: "p|m-<num>-<num>-<num>-<num>" },
 			],
 			[
-				/^inset-(x|y)-(\d+)-?(\d+)?$|^(px|py|mx|my)-(\d+)-?(\d+)?$/,
-				(match) => {
-					const [, direction, s, optional] = match as [unknown, "px" | "py" | "mx" | "my" | "x" | "y", number, number];
+				/^(px|py|mx|my|gap)-(\d+)-?(\d+)?$/,
+				([, direction, s, optional]: [unknown, "px" | "py" | "mx" | "my" | "gap", number, number]) => {
 					const combination = {
 						px: "padding-inline",
 						py: "padding-block",
 						mx: "margin-inline",
 						my: "margin-block",
+						gap: "gap",
+					} as const satisfies Record<typeof direction, string>;
+
+					const returndirection = combination[direction];
+					let value = "";
+
+					value = `${Number(s) / 4}rem`;
+					value += optional ? ` ${Number(optional) / 4}rem` : "";
+
+					return { [returndirection]: value };
+				},
+				{ autocomplete: "gap|px|py|mx|my-<num>-<num>" },
+			],
+
+			[
+				/^inset-(x|y)-(\d+)-?(\d+)?$/,
+				([, direction, s, optional]: [unknown, "x" | "y", number, number]) => {
+					const combination = {
 						x: "inset-inline",
 						y: "inset-block",
 					} as const satisfies Record<typeof direction, string>;
 
 					const returndirection = combination[direction];
 					let value = "";
-					if (returndirection === "inset-inline" || returndirection === "inset-block") {
-						value = `${s}%`;
-						value += optional ? ` ${+optional}%` : "";
-					} else {
-						value = `${Number(s) / 4}em`;
-						value += optional ? ` ${+optional / 4}em` : "";
-					}
+					value = `${s}%`;
+					value += optional ? ` ${+optional}%` : "";
+
 					return { [returndirection]: value };
 				},
-				{ autocomplete: "px|py|mx|my-<num>-<num>" },
+				{ autocomplete: "inset-<x|y>-<num>-<num>" },
 			],
+
 			[
 				/^size-(\d+)-?(\d+)?$/,
 				([, s, optional]: [unknown, number, number]): Record<"block-size" | "inline-size", string>[] => {
@@ -167,13 +181,12 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^grid-area-(\w+)$/,
-				([,match]:[undefined,string]): Record<'grid-area', typeof match> => {
+				([, match]: [undefined, string]): Record<"grid-area", typeof match> => {
 					return {
-						"grid-area": match
+						"grid-area": match,
 					};
 				},
-				
-			]
+			],
 		] as Rule[],
 		shortcuts: [
 			[
