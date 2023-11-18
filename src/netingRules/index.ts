@@ -9,12 +9,12 @@ import { splitString, lastJoin } from "./utils";
  * @param {string} css what is inside the brakets []
  * @returns {String} long string
  */
-export function Tailwind(category: Category, css: string): string {
+export default function Tailwind(category: Category, css: string): string {
 	const splitStringCSS = splitString(css);
 	const finalSet: Set<string> = new Set();
 	for (const a of splitStringCSS) {
 		const nestedElementA = nestedElement(a);
-		const generateSetOfStringsA = generateSetOfStrings(category, nestedElementA);
+			const generateSetOfStringsA = generateSetOfStrings(category, nestedElementA);
 		finalSet.add(lastJoin(generateSetOfStringsA));
 	}
 	return lastJoin(finalSet);

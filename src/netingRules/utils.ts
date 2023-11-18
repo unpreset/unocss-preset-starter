@@ -1,4 +1,4 @@
-import { includes, split, trim, toLowerCase, join } from "string-ts";
+import { includes, join, split, toLowerCase, trim } from "string-ts";
 
 /**
  * Description: join Set to make a string used at end of script
@@ -16,7 +16,7 @@ export function lastJoin(x: Set<string>): string {
  */
 export function joinArray(array: string[][]): string {
 	if (array.length === 2) {
-		const [state, catANDcss] = array as [Before[], [Category, string]];
+			const [state, catANDcss] = array as [Before[], [Category, string]];
 		const result: [string, `${Category}-${string}`] = [join(state, ":"), `${catANDcss[0]}-${catANDcss[1]}`];
 		return join(result, ":");
 	} else if (array.length === 1) {

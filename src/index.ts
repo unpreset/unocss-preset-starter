@@ -1,6 +1,6 @@
 import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
-import { Tailwind } from "./netingRules";
+import Tailwind from "./netingRules";
 import { replace } from "string-ts";
 
 /**
@@ -14,7 +14,7 @@ import { replace } from "string-ts";
  *
  * @type {*}
  */
-export const presetStarter = definePreset((): Preset => {
+export const unocssPresetWindExtra = definePreset((): Preset => {
 	return {
 		name: "unocssjojo",
 		rules: [
@@ -73,8 +73,7 @@ export const presetStarter = definePreset((): Preset => {
 			],
 			[
 				/^(p|m)-(\d+)-(\d+)?-?(\d+|auto)?-?(\d+|auto)?$/,
-				(match) => {
-					const [, PaddingOrMargin, t, r, b, l] = match as [unknown, "p" | "m", number, number, number | "auto", number | "auto"];
+				([, PaddingOrMargin, t, r, b, l]:[unknown, "p" | "m", number, number, number | "auto", number | "auto"]) => {
 					type isPad<T extends typeof PaddingOrMargin> = T extends "m" ? false : true;
 
 					const isPadding = (<T extends typeof PaddingOrMargin>(x: T) => {
@@ -89,7 +88,7 @@ export const presetStarter = definePreset((): Preset => {
 					}
 					return isPadding ? { padding: List.join(" ") } : { margin: List.join(" ") };
 				},
-				{ autocomplete: "p|m-<num>-<num>-<num>-<num>" },
+				{ autocomplete: "(p|m)-<num>-<num>-<num>-<num>" },
 			],
 			[
 				/^(px|py|mx|my|gap)-(\d+)-?(\d+)?$/,
@@ -110,7 +109,7 @@ export const presetStarter = definePreset((): Preset => {
 
 					return { [returndirection]: value };
 				},
-				{ autocomplete: "gap|px|py|mx|my-<num>-<num>" },
+				{ autocomplete: "(gap|px|py|mx|my)-<num>-<num>" },
 			],
 
 			[
@@ -128,13 +127,12 @@ export const presetStarter = definePreset((): Preset => {
 
 					return { [returndirection]: value };
 				},
-				{ autocomplete: "inset-<x|y>-<num>-<num>" },
+				{ autocomplete: "inset-(x|y)-<num>-<num>" },
 			],
 
 			[
 				/^size-(\d+)-?(\d+)?$/,
 				([, s, optional]: [unknown, number, number]): Record<"block-size" | "inline-size", string>[] => {
-					//let [, s, optional] = match as [unknown, number,number];
 					const sizeInRem: number = s / 4;
 					return [
 						{
@@ -165,7 +163,7 @@ export const presetStarter = definePreset((): Preset => {
 						},
 					];
 				},
-				{ autocomplete: "mx|my|mt|mb|ml|mr-trim" },
+				{ autocomplete: "(mx|my|mt|mb|ml|mr)-trim" },
 			],
 			[
 				/^vertical-(rl|lr)$/,
@@ -177,7 +175,7 @@ export const presetStarter = definePreset((): Preset => {
 					}
 					return result;
 				},
-				{ autocomplete: "vertical-rl|lr" },
+				{ autocomplete: "vertical-(rl|lr)" },
 			],
 			[
 				/^grid-area-(\w+)$/,

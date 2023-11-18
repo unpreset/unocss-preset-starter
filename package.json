@@ -1,10 +1,10 @@
 {
-  "name": "unocss-preset-starter",
+  "name": "unocss-preset-wind-extra",
   "type": "module",
-  "version": "0.3.4",
+  "version": "0.3.6",
   "packageManager": "pnpm@8.7.0",
-  "description": "<description>",
-  "author": "unpreset <https://github.com/unpreset>",
+  "description": "Improve tailwind unocss to reduce length of classes",
+  "author": "Jonathan <https://github.com/unpreset>",
   "license": "MIT",
   "homepage": "https://github.com/unpreset/unocss-preset-starter#readme",
   "repository": {
@@ -18,7 +18,8 @@
     "unocss",
     "unpreset",
     "unocss-preset",
-    "unocss-preset-starter"
+    "unocss-preset-starter",
+    "tailwind"
   ],
   "sideEffects": false,
   "exports": {
@@ -58,9 +59,9 @@
   "devDependencies": {
     "@antfu/eslint-config": "1.0.0-beta.10",
     "@babel/types": "^7.23.0",
+    "@biomejs/biome": "1.3.3",
     "@types/node": "^20.7.0",
     "@vitejs/plugin-vue": "^4.3.4",
-    "bumpp": "^9.2.0",
     "eslint": "^8.50.0",
     "typescript": "5.2.2",
     "unbuild": "^2.0.0",
@@ -70,7 +71,6 @@
   },
   "dependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
-    "@unocss/preset-wind": "^0.57.3",
     "biome": "latest",
     "string-ts": "^1.3.2"
   }

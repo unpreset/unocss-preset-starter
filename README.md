@@ -12,35 +12,37 @@ We like the tailwindcss syntax, but it's often too long to read. Today, with uno
 - inset-x or inset-y
 - flex-grow flex-shrink flex-basis
 - Compress tailwind Line 30%
+- grid area
 
 ## Usage
 ```shell
-pnpm i -D unocss-preset-starter unocss presetWind
+pnpm i unocss-preset-wind-extra unocss @unocss/preset-wind
 ```
 
 ```ts
 // uno.config.ts
 import {presetWind, defineConfig } from 'unocss'
-import { presetStarter } from 'unocss-preset-starter'
+import { unocssPresetWindExtra } from 'unocss-preset-wind-extra'
 
 export default defineConfig({
   presets: [
     // ...
     presetWind(),
-    presetStarter(),
+    unocssPresetWindExtra(),
   ],
 })
 ```
 | Unocss My preset              | tailwind like or CSS                           |
 |-------------------------------|------------------------------------------------|
 | flex\|10\|50\|500             | grow-10 shrik-50 basis-500                     |
+| flex\|10\|50                  | grow-10 shrik-50                               |
 | px-6-10                       | pl-6 pr-10                                     |
 | mx-6-10                       | ml-6 mr-10                                     |
 | gap-6-11                      | gap-y-6 gap-x-11                               |
 | inset-x-6-9                   | inset-inline: 6% 9%                            |
 | inset-y-6-9                   | inset-block: 6% 9%                             |
 | m-5-6-9-10                    |                                                |
-| p-6-4-8-201                   |                                                |
+| p-6-4-8-201                   | pt-6 pr-4 pb-8 pl-201 or py-6-8 px-4-201       |
 | p-6-4                         | py-6 px-4                                      |
 | p-6-4-8                       |                                                |
 | p-6-4-auto-auto               |                                                |
