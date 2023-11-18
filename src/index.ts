@@ -20,7 +20,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 		rules: [
 			[
 				/^family-([a-zA-Z_]*)$/,
-				([, c]: [null, string]) => {
+				(match) => {
+					let [, c] = match as [unknown,string]
 					c &&= replace(c, "_", " ");
 
 					return {
