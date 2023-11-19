@@ -16,12 +16,12 @@ import { replace } from "string-ts";
  */
 export const unocssPresetWindExtra = definePreset((): Preset => {
 	return {
-		name: "unocssjojo",
+		name: "unocssPresetWindExtra",
 		rules: [
 			[
 				/^family-([a-zA-Z_]*)$/,
 				(match) => {
-					let [, c] = match as [unknown,string]
+					let [, c] = match as [unknown, string];
 					c &&= replace(c, "_", " ");
 
 					return {
@@ -31,14 +31,18 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 
 			[
-				/^flex\|([0-9])\|([0-9])\|?([a-z0-9%]{2,})?$/,
-				([, grow, shrink, basis]: [unknown, number, number, string | undefined]) => {
-					basis ??= "auto";
-					if (Number(basis) && !basis.includes("%")) {
-						basis &&= `${Number(basis) / 4}rem`;
+				/^flex\|(\d+)?\|(\d+)?\|?([0-9]+(?:px|em|rem|%|vw)?)?$/,
+				([, grow, shrink, basis]: [unknown, number, number, number | string | "auto"]) => {
+					if (basis) {
+						if (Number(basis)) {
+							basis &&= `${Number(basis) / 4}rem`;
+						}
+						return {
+							flex: `${grow} ${shrink} ${basis}`,
+						};
 					}
 					return {
-						flex: `${grow} ${shrink} ${basis}`,
+						flex: `${grow} ${shrink}`,
 					};
 				},
 				{ autocomplete: "flex|<num>|<num>|(<num>|auto)" },
@@ -74,7 +78,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 			[
 				/^(p|m)-(\d+)-(\d+)?-?(\d+|auto)?-?(\d+|auto)?$/,
-				([, PaddingOrMargin, t, r, b, l]:[unknown, "p" | "m", number, number, number | "auto", number | "auto"]) => {
+				([, PaddingOrMargin, t, r, b, l]: [unknown, "p" | "m", number, number, number | "auto", number | "auto"]) => {
 					type isPad<T extends typeof PaddingOrMargin> = T extends "m" ? false : true;
 
 					const isPadding = (<T extends typeof PaddingOrMargin>(x: T) => {
@@ -168,7 +172,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 			[
 				/^vertical-(rl|lr)$/,
-				([, rl_lr]: [unknown, "rl" | "lr"]): Record<string, `vertical-${typeof rl_lr}`> => {
+				([, rl_lr = "lr"]: [unknown, "rl" | "lr"]): Record<string, `vertical-${typeof rl_lr}`> => {
 					const returnArr: string[] = ["-webkit-writing-mode", "-ms-writing-mode", "writingMode"];
 					const result: Record<string, `vertical-${typeof rl_lr}`> = {};
 					for (const e of returnArr) {
@@ -198,3 +202,5 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 		] as Shortcut[],
 	};
 });
+
+export default unocssPresetWindExtra;

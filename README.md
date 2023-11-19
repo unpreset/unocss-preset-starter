@@ -22,7 +22,7 @@ pnpm i unocss-preset-wind-extra unocss @unocss/preset-wind
 ```ts
 // uno.config.ts
 import {presetWind, defineConfig } from 'unocss'
-import { unocssPresetWindExtra } from 'unocss-preset-wind-extra'
+import  unocssPresetWindExtra  from 'unocss-preset-wind-extra'
 
 export default defineConfig({
   presets: [
@@ -35,6 +35,7 @@ export default defineConfig({
 | Unocss My preset              | tailwind like or CSS                           |
 |-------------------------------|------------------------------------------------|
 | flex\|10\|50\|500             | grow-10 shrik-50 basis-500                     |
+| flex\|10\|50\|500px           | grow-10 shrik-50 basis-500px                   |
 | flex\|10\|50                  | grow-10 shrik-50                               |
 | px-6-10                       | pl-6 pr-10                                     |
 | mx-6-10                       | ml-6 mr-10                                     |
