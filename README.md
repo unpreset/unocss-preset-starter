@@ -1,6 +1,7 @@
 ## Features
 
 We like the tailwindcss syntax, but it's often too long to read. Today, with unocss and this preset, you can reduce tailwindcss syntax by 30% and improve code readability.
+You need [Preset-wind](https://www.npmjs.com/package/@unocss/preset-wind) and this preset to work
 ![Reduce 30% tailwind syntax](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/efb0180e-38f5-4360-89f5-92b646995de1)
 
 ### Liste des Shortcuts
@@ -113,6 +114,8 @@ https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/4518491
 }
 ```
 ## copy and Past
+### Don't forget to activate the UNOCSS extension with underline
+[Unocss extension](https://marketplace.visualstudio.com/items?itemName=antfu.unocss)
 ```html
 <div class="flex-row-8 border-6 border-red [&>div]:(size-30 bg-green)  grid-[col-span-1,col-start-2]">
 	<div class="bg-red-600  m-3"></div>

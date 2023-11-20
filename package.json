@@ -1,7 +1,7 @@
 {
   "name": "unocss-preset-wind-extra",
   "type": "module",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "packageManager": "pnpm@8.7.0",
   "description": "Improve tailwind unocss to reduce length of classes",
   "author": "Jonathan <https://github.com/unpreset>",
