@@ -36,17 +36,19 @@ export default defineConfig({
 | Unocss My preset              | tailwind like or CSS                           |
 |-------------------------------|------------------------------------------------|
 | flex\|10\|50\|500             | grow-10 shrik-50 basis-500                     |
-| flex\|10\|50\|500px           | grow-10 shrik-50 basis-500px                   |
+| flex\|10\|50\|500rem          | grow-10 shrik-50 basis-500rem                  |
 | flex\|10\|50                  | grow-10 shrik-50                               |
 | px-6%-10rem                   | pl-6% pr-10rem                                 |
 | px-6-10                       | pl-6 pr-10                                     |
 | mx-6-10                       | ml-6 mr-10                                     |
 | gap-6-11                      | gap-y-6 gap-x-11                               |
+| gap-6vw-11%                   | gap-y-6vw gap-x-11%                            |
 | inset-x-6-9                   | inset-inline: 6rem 9rem                        |
 | inset-x-6%-9vw                | inset-inline: 6% 9vw                           |
 | inset-y-6-9                   | inset-block: 6% 9%                             |
 | m-5-6-9-10                    |                                                |
 | p-6-4-8-201                   | pt-6 pr-4 pb-8 pl-201 or py-6-8 px-4-201       |
+| p-6%-4rem-8vw-201%            | pt-6% pr-4rem pb-8vw pl-201%                   |
 | p-6-4                         | py-6 px-4                                      |
 | p-6-4-8                       |                                                |
 | p-6-4-auto-auto               |                                                |
@@ -66,7 +68,9 @@ grid-[col-start-1,col-span-2,lg:[col-start-1,col-span-3,row-span-12]]
 ## Compress the length of tailwindcss Class
 ### Merge rules for : 
 "grid"|"font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide"| "row"| "col";
-It reqiuere the ```presetWind()``` to work because it convert to tailwindcss class
+It reqiuere the ```presetWind()``` [Preset-wind](https://www.npmjs.com/package/@unocss/preset-wind)to work because it convert to tailwindcss class
+[Preset-wind presset](https://www.npmjs.com/package/@unocss/preset-wind)
+
 | unocss                                                      | Tailwind convertion                                                                         |
 |-------------------------------------------------------------|---------------------------------------------------------------------------------------------|
 | text-[red,hover:orange,md:hover:[ green,blue,first:green ]] | text-red hover:text-orange md:hover:text-green md:hover:text-blue md:hover:first:text-green |
