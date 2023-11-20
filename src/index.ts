@@ -2,6 +2,11 @@ import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
 import Tailwind from "./netingRules";
 import { replace } from "string-ts";
+import { numberRemOrString } from "./netingRules/utils";
+
+
+const digitPlusUnit: RegExp = /\d+(?:em|rem|%|vw)?/;
+
 
 /**
  * Liste des category available
@@ -31,11 +36,11 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 
 			[
-				/^flex\|(\d+)?\|(\d+)?\|?([0-9]+(?:px|em|rem|%|vw)?)?$/,
-				([, grow, shrink, basis]: [unknown, number, number, number | string | "auto"]) => {
+				/^flex\|(\d+)?\|(\d+)?\|?([0-9]+(?:em|rem|%|vw)?)?$/,
+				([, grow, shrink, basis]: [unknown, number, number, string | "auto"]) => {
 					if (basis) {
 						if (Number(basis)) {
-							basis &&= `${Number(basis) / 4}rem`;
+							basis &&= numberRemOrString(basis);
 						}
 						return {
 							flex: `${grow} ${shrink} ${basis}`,
@@ -77,8 +82,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 				{ autocomplete: "flex-(col|row)-(1|2|3|4|5|6|7|8|9)" },
 			],
 			[
-				/^(p|m)-(\d+)-(\d+)?-?(\d+|auto)?-?(\d+|auto)?$/,
-				([, PaddingOrMargin, t, r, b, l]: [unknown, "p" | "m", number, number, number | "auto", number | "auto"]) => {
+				/^(p|m)-(\d+(?:em|rem|%|vw)?)-(\d+(?:em|rem|%|vw)?)?-?(\d+(?:em|rem|%|vw)?|auto)?-?(\d+(?:em|rem|%|vw)?|auto)?$/,
+				([, PaddingOrMargin, t, r, b, l]) => {
 					type isPad<T extends typeof PaddingOrMargin> = T extends "m" ? false : true;
 
 					const isPadding = (<T extends typeof PaddingOrMargin>(x: T) => {
@@ -89,15 +94,15 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 					for (const e of [t, r, b, l].filter(Boolean)) {
 						if (!e || e === "auto") {
 							List.push("auto");
-						} else List.push(`${Number(e) / 4}em`);
+						} else List.push(numberRemOrString(e));
 					}
 					return isPadding ? { padding: List.join(" ") } : { margin: List.join(" ") };
 				},
 				{ autocomplete: "(p|m)-<num>-<num>-<num>-<num>" },
 			],
 			[
-				/^(px|py|mx|my|gap)-(\d+)-?(\d+)?$/,
-				([, direction, s, optional]: [unknown, "px" | "py" | "mx" | "my" | "gap", number, number]) => {
+				new RegExp(`^(px|py|mx|my|gap)-(${digitPlusUnit.source})-?(${digitPlusUnit.source})?$`),
+				([, direction, s, optional]: [unknown, "px" | "py" | "mx" | "my" | "gap", string, string]) => {
 					const combination = {
 						px: "padding-inline",
 						py: "padding-block",
@@ -109,8 +114,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 					const returndirection = combination[direction];
 					let value = "";
 
-					value = `${Number(s) / 4}rem`;
-					value += optional ? ` ${Number(optional) / 4}rem` : "";
+					value = numberRemOrString(s);
+					value += optional ? ` ${numberRemOrString(optional)}` : "";
 
 					return { [returndirection]: value };
 				},
@@ -118,8 +123,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 
 			[
-				/^inset-(x|y)-(\d+)-?(\d+)?$/,
-				([, direction, s, optional]: [unknown, "x" | "y", number, number]) => {
+				new RegExp(`^inset-(x|y)-(${digitPlusUnit.source})-?(${digitPlusUnit.source})?$`),
+				([, direction, s, optional]: [unknown, "x" | "y", string, string]) => {
 					const combination = {
 						x: "inset-inline",
 						y: "inset-block",
@@ -127,8 +132,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 
 					const returndirection = combination[direction];
 					let value = "";
-					value = `${s}%`;
-					value += optional ? ` ${+optional}%` : "";
+					value = numberRemOrString(s);
+					value += optional ? ` ${numberRemOrString(optional)}` : "";
 
 					return { [returndirection]: value };
 				},
@@ -136,14 +141,14 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 
 			[
-				/^size-(\d+)-?(\d+)?$/,
-				([, s, optional]: [unknown, number, number]): Record<"block-size" | "inline-size", string>[] => {
-					const sizeInRem: number = s / 4;
+				new RegExp(`^size-(${digitPlusUnit.source})-?(${digitPlusUnit.source})?$`),
+				([, s, optional=s]: [unknown, string, string]): Record<"block-size" | "inline-size", string>[] => {
+					
 					return [
 						{
-							"block-size": `${sizeInRem}rem`,
-							"inline-size": optional ? `${optional / 4}rem` : `${sizeInRem}rem`,
-						},
+							"block-size": numberRemOrString(s),
+							"inline-size": numberRemOrString(optional) 
+						}
 					];
 				},
 				{ autocomplete: "size-<num>-<num>" },

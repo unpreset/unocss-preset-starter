@@ -37,10 +37,12 @@ export default defineConfig({
 | flex\|10\|50\|500             | grow-10 shrik-50 basis-500                     |
 | flex\|10\|50\|500px           | grow-10 shrik-50 basis-500px                   |
 | flex\|10\|50                  | grow-10 shrik-50                               |
+| px-6%-10rem                   | pl-6% pr-10rem                                 |
 | px-6-10                       | pl-6 pr-10                                     |
 | mx-6-10                       | ml-6 mr-10                                     |
 | gap-6-11                      | gap-y-6 gap-x-11                               |
-| inset-x-6-9                   | inset-inline: 6% 9%                            |
+| inset-x-6-9                   | inset-inline: 6rem 9rem                        |
+| inset-x-6%-9vw                | inset-inline: 6% 9vw                           |
 | inset-y-6-9                   | inset-block: 6% 9%                             |
 | m-5-6-9-10                    |                                                |
 | p-6-4-8-201                   | pt-6 pr-4 pb-8 pl-201 or py-6-8 px-4-201       |
@@ -83,7 +85,7 @@ flex-col-4 = justify-items-start items-center flex flex-col
 ```html
 <div class="flex-col-4">
   <div class="size-20 p-4-2">01</div>
-  <div class="size-20 p-4-2">02</div>
+  <div class="size-20% p-4-2">02</div>
   <div class="size-20-30 p-4-2 max-h-6">03</div>
 </div>
 ```
@@ -109,6 +111,29 @@ https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/4518491
   justify-content: start;
   align-items: end;
 }
+```
+## copy and Past
+```html
+<div class="flex-row-8 border-6 border-red [&>div]:(size-30 bg-green)  grid-[col-span-1,col-start-2]">
+	<div class="bg-red-600  m-3"></div>
+	<div class="bg-red-600  m-3"></div>
+	<div class="bg-red-600  m-3"></div>
+	<div class="bg-red-600! m-3"></div>
+	<div class="bg-red-200! m-3"></div>
+	<div class="bg-red-600 	m-3"></div>
+	<div class="bg-[#ffff] size-10 m-3 md:row-[span-6,start-6] gap-3-9 flex|1|20|50%"></div>
+</div>
+
+
+<div class="grid grid-[rows-3,flow-col] grid-cols-[auto,1fr,10px] gap-4 px-6rem-8em">
+  <div class="row-[start-2,span-2] grid-area-one gap-2-6 px-6-1 inset-x-4 p-16rem-16-auto-auto">01</div>
+  <div class="col-[end-3,span-2] bg-red grid-area-two">02</div>
+  <div class="size-9-7">03</div>
+  <div class="size-9%-7rem m-7%-5rem-51-auto">09</div>
+  <div class="mx-8rem-4 mx-auto mx-10-5 py-88rem-88">03</div>
+  <div class="inset-x-5-9 inset-y-50%-9rem bg-[red,lg:[hover:green-100,green-600],md:pink]">03</div>
+</div>
+
 ```
 
 ## License

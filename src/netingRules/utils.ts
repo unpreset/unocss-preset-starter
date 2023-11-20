@@ -16,7 +16,7 @@ export function lastJoin(x: Set<string>): string {
  */
 export function joinArray(array: string[][]): string {
 	if (array.length === 2) {
-			const [state, catANDcss] = array as [Before[], [Category, string]];
+		const [state, catANDcss] = array as [Before[], [Category, string]];
 		const result: [string, `${Category}-${string}`] = [join(state, ":"), `${catANDcss[0]}-${catANDcss[1]}`];
 		return join(result, ":");
 	} else if (array.length === 1) {
@@ -100,4 +100,16 @@ export const removeDuplicates = (array: (string | Before)[]): string[] => {
 export const regex: Record<string, RegExp> = {
 	nestedBrackets: new RegExp("(\\w+):\\[(.+?)\\]|(\\w+)?:?(\\w+):\\[(.+?)\\]"),
 	beforeCapture: new RegExp("(?<before>.*):\\[(?<cssInside>.*)\\]"),
+	
 };
+
+export function numberRemOrString(x: string): string {
+	if (!Number.isNaN(Number(x))) {
+		return `${Number(x) / 4}rem`;
+	} 
+	return x;
+}
+
+
+
+

@@ -73,6 +73,7 @@ type Before =
 
 type StringElement<T = string | number> = T | Array<StringElement<T>>;
 
+
 interface NestedElementResult {
 	before?: Before[];
 	cssInside: Array<string | Before>[];
