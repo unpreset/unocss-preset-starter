@@ -14,7 +14,7 @@ function nestedElement(x: string): NestedElementResult | Omit<NestedElementResul
 
 			get beforefn(): Array<string> {
 				if (this._before) {
-					return removeDuplicates(split(this._before,":"));
+					return removeDuplicates(split(this._before, ":"));
 				}
 				return [];
 			},

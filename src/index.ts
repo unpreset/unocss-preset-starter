@@ -1,12 +1,11 @@
 import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
 import Tailwind from "./netingRules";
-import { replace } from "string-ts";
+import { replace, join } from "string-ts";
 import { numberRemOrString } from "./netingRules/utils";
 
-
 const digitPlusUnit: RegExp = /\d+(?:em|rem|%|vw)?/;
-
+const Category: Readonly<Category[]> = ["col", "row", "grid", "font", "text", "bg", "border", "stroke", "outline", "underline", "ring", "divide"];
 
 /**
  * Liste des category available
@@ -142,13 +141,12 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 
 			[
 				new RegExp(`^size-(${digitPlusUnit.source})-?(${digitPlusUnit.source})?$`),
-				([, s, optional=s]: [unknown, string, string]): Record<"block-size" | "inline-size", string>[] => {
-					
+				([, s, optional = s]: [unknown, string, string]): Record<"block-size" | "inline-size", string>[] => {
 					return [
 						{
 							"block-size": numberRemOrString(s),
-							"inline-size": numberRemOrString(optional) 
-						}
+							"inline-size": numberRemOrString(optional),
+						},
 					];
 				},
 				{ autocomplete: "size-<num>-<num>" },
@@ -198,7 +196,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 		] as Rule[],
 		shortcuts: [
 			[
-				/^(grid|font|bg|border|stroke|outline|ring|divide|text|row|col)-\[(.*)\]$/,
+				new RegExp(`^(${join(Category, "|")})-\\[(.*)\\]$`),
 				(match): string => {
 					const [, category, stringElement] = match as [unknown, Category, string];
 					return Tailwind(category, stringElement);

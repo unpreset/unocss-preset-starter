@@ -1,7 +1,7 @@
 {
   "name": "unocss-preset-wind-extra",
   "type": "module",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "packageManager": "pnpm@8.7.0",
   "description": "Improve tailwind unocss to reduce length of classes",
   "author": "Jonathan <https://github.com/unpreset>",
@@ -50,8 +50,7 @@
     "release": "pnpm publish --no-git-checks ",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "play": "vite playground",
-    "deploy": "vite build playground"
+    "format": "bunx @biomejs/biome format --write ."
   },
   "peerDependencies": {
     "@unocss/core": "< 1"

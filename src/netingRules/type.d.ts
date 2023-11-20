@@ -1,6 +1,6 @@
 type regexArray = RegExpMatchArray | null;
 
-type Category = "col"|"row"|"grid" | "font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
+type Category = "col" | "row" | "grid" | "font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
 type currentElement<T extends boolean> = T extends true ? "" : string;
 
 type Before =
@@ -72,7 +72,6 @@ type Before =
 	| ("open" & string);
 
 type StringElement<T = string | number> = T | Array<StringElement<T>>;
-
 
 interface NestedElementResult {
 	before?: Before[];

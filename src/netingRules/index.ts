@@ -14,7 +14,7 @@ export default function Tailwind(category: Category, css: string): string {
 	const finalSet: Set<string> = new Set();
 	for (const a of splitStringCSS) {
 		const nestedElementA = nestedElement(a);
-			const generateSetOfStringsA = generateSetOfStrings(category, nestedElementA);
+		const generateSetOfStringsA = generateSetOfStrings(category, nestedElementA);
 		finalSet.add(lastJoin(generateSetOfStringsA));
 	}
 	return lastJoin(finalSet);

@@ -1,20 +1,12 @@
-import {
-	defineConfig,
-	presetAttributify,
-	presetIcons,
-	presetTagify,
-	presetWind,
-	transformerDirectives,
-	transformerVariantGroup,
-} from "unocss";
+import { defineConfig, presetAttributify, presetIcons, presetTagify, presetWind, transformerDirectives, transformerVariantGroup } from "unocss";
 
-import { presetStarter } from 'unocss-preset-starter'
+import unocssPresetWindExtra from "unocss-preset-wind-extra";
 
 export default defineConfig({
 	//extractors: [extractorSvelte],
 	transformers: [transformerDirectives(), transformerVariantGroup()],
 	presets: [
-		presetStarter(),
+		unocssPresetWindExtra(),
 		presetWind(),
 		presetAttributify({ ignoreAttributes: ["block"] }),
 		presetTagify(),
@@ -45,17 +37,7 @@ export default defineConfig({
 				"src/**/*.{js,ts}",
 			],
 
-			exclude: [
-				"node_modules",
-				"dist",
-				".git",
-				".husky",
-				".vscode",
-				"public",
-				"build",
-				"mock",
-				"./stats.html",
-			],
+			exclude: ["node_modules", "dist", ".git", ".husky", ".vscode", "public", "build", "mock", "./stats.html"],
 		},
 	},
 

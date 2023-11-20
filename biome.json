@@ -12,9 +12,9 @@
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": false,
-		"indentStyle": "tab",
-		"indentSize": 2,
 		"lineWidth": 200,
-		"ignore": []
+		"ignore": [],
+		"include": ["*.ts"]
+		
 	}
 }
