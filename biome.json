@@ -13,8 +13,6 @@
 		"enabled": true,
 		"formatWithErrors": false,
 		"lineWidth": 200,
-		"ignore": [],
-		"include": ["*.ts"]
-		
+		"ignore": ["node_modules", "dist"]
 	}
 }
