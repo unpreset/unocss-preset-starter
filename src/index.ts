@@ -25,7 +25,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			[
 				/^family-([a-zA-Z_]*)$/,
 				(match) => {
-					let [, c ="Arial"] = match;
+					let [, c = "Arial"] = match;
 					c &&= replace(c, "_", " ");
 
 					return {
@@ -53,7 +53,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 			[
 				/^flex-(row|col)-([1-9])$/,
-				([, direction='row', flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): Record<string, string> => {
+				([, direction = "row", flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): Record<string, string> => {
 					type PositionProps = Readonly<"start" | "center" | "end">;
 					const positions = {
 						1: ["start", "start"],
