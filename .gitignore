@@ -4,3 +4,5 @@ dist
 *.log
 .vscode
 test.ts
+*.lockb
+.wireit/
