@@ -88,10 +88,10 @@ flex-col-1 flex-col-2 flex-col-3 flex-col-4 flex-col-5 flex-col-6 flex-col-7 fle
 flex-col-4 = justify-items-start items-center flex flex-col
 ```
 ```html
-<div class="flex-col-4">
-  <div class="size-20 p-4-2">01</div>
-  <div class="size-20% p-4-2">02</div>
-  <div class="size-20-30 p-4-2 max-h-6">03</div>
+<div class="flex-row-2 border-3 size-100  [&>div]:(size-6)">
+	<div class="bg-red-200! m-3"></div>
+	<div class="bg-red-600 	m-3"></div>
+	<div class="bg-[#ffff] m-3"></div>
 </div>
 ```
 
