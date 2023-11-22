@@ -25,7 +25,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			[
 				/^family-([a-zA-Z_]*)$/,
 				(match) => {
-					let [, c] = match as [unknown, string];
+					let [, c ="Arial"] = match;
 					c &&= replace(c, "_", " ");
 
 					return {
@@ -36,7 +36,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 
 			[
 				/^flex\|(\d+)?\|(\d+)?\|?([0-9]+(?:em|rem|%|vw)?)?$/,
-				([, grow, shrink, basis]: [unknown, number, number, string | "auto"]) => {
+				([, grow = 0, shrink = 1, basis]: [unknown, number, number, string | "auto"]) => {
 					if (basis) {
 						if (Number(basis)) {
 							basis &&= numberRemOrString(basis);
@@ -53,7 +53,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 			[
 				/^flex-(row|col)-([1-9])$/,
-				([, direction, flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): Record<string, string> => {
+				([, direction='row', flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): Record<string, string> => {
 					type PositionProps = Readonly<"start" | "center" | "end">;
 					const positions = {
 						1: ["start", "start"],
