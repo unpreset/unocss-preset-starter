@@ -6,3 +6,4 @@ dist
 test.ts
 *.lockb
 .wireit/
+gum.sh
