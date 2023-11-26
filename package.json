@@ -46,7 +46,6 @@
   "scripts": {
     "build": "wireit",
     "dev": "wireit",
-    "prepublishOnly": "bun run build",
     "release": "wireit",
     "format": "wireit",
     "bump": "./bump.sh"
@@ -67,7 +66,7 @@
   "dependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
     "biome": "latest",
-    "string-ts": "^1.3.2"
+    "string-ts": "latest"
   },
   "wireit": {
     "build": {
@@ -78,7 +77,7 @@
       "dependencies": []
     },
     "release": {
-      "command": "pnpm publish --no-git-checks",
+      "command": "bump & pnpm publish --no-git-checks",
       "dependencies": [
         "format",
         "build"
@@ -87,8 +86,8 @@
     "format": {
       "command": "bunx @biomejs/biome format --write ."
     },
-    "dev":{
-      "command": "bun --watch run src/utils.ts"
+    "dev": {
+      "command": "bun --watch run test.ts"
     }
   }
 }
