@@ -43,9 +43,9 @@ export default defineConfig({
 | mx-6-10                       | ml-6 mr-10                                     |
 | gap-6-11                      | gap-y-6 gap-x-11                               |
 | gap-6vw-11%                   | gap-y-6vw gap-x-11%                            |
-| inset-x-6-9                   | inset-inline: 6rem 9rem                        |
+| inset-x-6-9                   | inset-inline: 6px 9px                          |
 | inset-x-6%-9vw                | inset-inline: 6% 9vw                           |
-| inset-y-6-9                   | inset-block: 6% 9%                             |
+| inset-y-6-9                   | inset-block: 1.5rem 2.25rem                    |
 | m-5-6-9-10                    |                                                |
 | p-6-4-8-201                   | pt-6 pr-4 pb-8 pl-201 or py-6-8 px-4-201       |
 | p-6%-4rem-8vw-201%            | pt-6% pr-4rem pb-8vw pl-201%                   |
@@ -54,11 +54,14 @@ export default defineConfig({
 | p-6-4-auto-auto               |                                                |
 | flex-col-4                    | justify-items-start items-center flex flex-col |
 | size-60                       | w-60 h-60                                      |
+| size-min-fit                  | w-min h-fit                                    |
 | size-60-80                    | w-60 h-80                                      |
 | mx-trim \| my-trim \| mt-trim | margin-trim                                    |
 | grid-area-one                 | grid-area: one;                                |
 | grid-area-helloWorld          | grid-area: helloWorld;                         |
 ```
+#### All css sizes supported
+em|rem|%|vw|vh|svh|lvh|svw|lvw|dvw|svi|lvi|dvb
 
 text-[red,hover:orange]
 bg-[red,lg:[hover:green-100,green-600],md:pink]
