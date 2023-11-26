@@ -101,10 +101,3 @@ export const regex: Record<string, RegExp> = {
 	nestedBrackets: new RegExp("(\\w+):\\[(.+?)\\]|(\\w+)?:?(\\w+):\\[(.+?)\\]"),
 	beforeCapture: new RegExp("(?<before>.*):\\[(?<cssInside>.*)\\]"),
 };
-
-export function numberRemOrString(x: string): string {
-	if (!Number.isNaN(Number(x))) {
-		return `${Number(x) / 4}rem`;
-	}
-	return x;
-}

@@ -2,9 +2,8 @@ import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
 import Tailwind from "./netingRules";
 import { replace, join } from "string-ts";
-import { numberRemOrString } from "./netingRules/utils";
+import { numberRemOrString, digitPlusUnit } from "./size";
 
-const digitPlusUnit: RegExp = /\d+(?:em|rem|%|vw)?/;
 const Category: Readonly<Category[]> = ["col", "row", "grid", "font", "text", "bg", "border", "stroke", "outline", "underline", "ring", "divide"];
 
 /**
@@ -100,8 +99,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 				{ autocomplete: "(p|m)-<num>-<num>-<num>-<num>" },
 			],
 			[
-				new RegExp(`^(px|py|mx|my|gap)-(${digitPlusUnit.source})-?(${digitPlusUnit.source})?$`),
-				([, direction, s, optional]: [unknown, "px" | "py" | "mx" | "my" | "gap", string, string]) => {
+				new RegExp(`^(px|py|mx|my|gap)-(${digitPlusUnit.source}-?(${digitPlusUnit.source})?)$`),
+				([, direction, , s, optional]: [unknown, "px" | "py" | "mx" | "my" | "gap", null, string, string]) => {
 					const combination = {
 						px: "padding-inline",
 						py: "padding-block",
@@ -122,8 +121,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 
 			[
-				new RegExp(`^inset-(x|y)-(${digitPlusUnit.source})-?(${digitPlusUnit.source})?$`),
-				([, direction, s, optional]: [unknown, "x" | "y", string, string]) => {
+				new RegExp(`^inset-(x|y)-(${digitPlusUnit.source}-?(${digitPlusUnit.source})?)$`),
+				([, direction, , s, optional]: [unknown, "x" | "y", unknown, string, string]) => {
 					const combination = {
 						x: "inset-inline",
 						y: "inset-block",
@@ -140,8 +139,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 
 			[
-				new RegExp(`^size-(${digitPlusUnit.source})-?(${digitPlusUnit.source})?$`),
-				([, s, optional = s]: [unknown, string, string]): Record<"block-size" | "inline-size", string>[] => {
+				new RegExp(`^size-(${digitPlusUnit.source}-?(${digitPlusUnit.source})?)$`),
+				([, , s, optional = s]: [unknown, unknown, string, string]): Record<"block-size" | "inline-size", string>[] => {
 					return [
 						{
 							"block-size": numberRemOrString(s),
