@@ -4,13 +4,13 @@
       Unpreset       Starter
     </div>
     <div class="flex">
-      <div class="col-3 bg-white text-center">
+      <div class="bg-white text-center col-3">
         Col 3
       </div>
-      <div class="col-4 bg-blue-3 text-center">
+      <div class="bg-blue-3 text-center col-4">
         Col 4
       </div>
-      <div class="col-5 bg-blue-3 text-center">
+      <div class="bg-blue-3 text-center col-5">
         Col 5
       </div>
     </div>

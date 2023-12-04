@@ -1,8 +1,8 @@
 import { createGenerator } from 'unocss'
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { presetStarter } from '../src'
 
-test('presetStarter', async () => {
+it('presetStarter', async () => {
   const uno = createGenerator({
     presets: [presetStarter()],
   })
