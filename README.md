@@ -1,3 +1,5 @@
+### use 0.5.7 PLEASE !!! 🅰️
+
 ## Features
 
 We like the tailwindcss syntax, but it's often too long to read. Today, with unocss and this preset, you can reduce tailwindcss syntax by 30% and improve code readability.
@@ -38,17 +40,18 @@ export default defineConfig({
 | flex\|10\|50\|500             | grow-10 shrik-50 basis-500                     |
 | flex\|10\|50\|500rem          | grow-10 shrik-50 basis-500rem                  |
 | flex\|10\|50                  | grow-10 shrik-50                               |
-| px-6%-10rem                   | pl-6% pr-10rem                                 |
+| px-[6%]-[10rem]               | pl-[6%] pr-[10rem]                             |
 | px-6-10                       | pl-6 pr-10                                     |
 | mx-6-10                       | ml-6 mr-10                                     |
+| mx-6-6                        | mx-6                                           |
 | gap-6-11                      | gap-y-6 gap-x-11                               |
-| gap-6vw-11%                   | gap-y-6vw gap-x-11%                            |
+| gap-[6vw]-[11%]               | gap-y-[6vw] gap-x-[11%]                        |
 | inset-x-6-9                   | inset-inline: 6px 9px                          |
-| inset-x-6%-9vw                | inset-inline: 6% 9vw                           |
+| inset-x-[6%]-[9vw]            | inset-inline: 6% 9vw                           |
 | inset-y-6-9                   | inset-block: 1.5rem 2.25rem                    |
 | m-5-6-9-10                    |                                                |
 | p-6-4-8-201                   | pt-6 pr-4 pb-8 pl-201 or py-6-8 px-4-201       |
-| p-6%-4rem-8vw-201%            | pt-6% pr-4rem pb-8vw pl-201%                   |
+| p-[6%]-[4rem]-[8vw]-[201%]    | pt-6% pr-4rem pb-8vw pl-201%                   |
 | p-6-4                         | py-6 px-4                                      |
 | p-6-4-8                       |                                                |
 | p-6-4-auto-auto               |                                                |
@@ -60,8 +63,8 @@ export default defineConfig({
 | grid-area-one                 | grid-area: one;                                |
 | grid-area-helloWorld          | grid-area: helloWorld;                         |
 ```
-#### All css sizes supported
-em|rem|%|vw|vh|svh|lvh|svw|lvw|dvw|svi|lvi|dvb
+#### All css sizes supported if they are iside [brackets]
+em|rem|%|vw|vh|svh|lvh|svw|lvw|dvw|svi|lvi|dvb => [21svh] [5/7] [1px]
 
 text-[red,hover:orange]
 bg-[red,lg:[hover:green-100,green-600],md:pink]
@@ -85,13 +88,14 @@ Decompose the layout of the divs in a grid from 1 to 9.
 ```md
 flex-row-1 flex-row-2 flex-row-3 flex-row-4 flex-row-5 flex-row-6 flex-row-7 flex-row-8 flex-row-9
 flex-col-1 flex-col-2 flex-col-3 flex-col-4 flex-col-5 flex-col-6 flex-col-7 flex-col-8 flex-col-9
+			
 ```
 ### unocss to tailwindcss exemple:
 ```md
 flex-col-4 = justify-items-start items-center flex flex-col
 ```
 ```html
-<div class="flex-row-2 border-3 size-100  [&>div]:(size-6)">
+<div class="flex-row-2 border-3 size-100 [&>div]:(size-6)">
 	<div class="bg-red-200! m-3"></div>
 	<div class="bg-red-600 	m-3"></div>
 	<div class="bg-[#ffff] m-3"></div>
@@ -124,7 +128,7 @@ https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/4518491
 ### Don't forget to activate the UNOCSS extension with underline
 [Unocss extension](https://marketplace.visualstudio.com/items?itemName=antfu.unocss)
 ```html
-<div class="flex-row-8 border-6 border-red [&>div]:(size-30 bg-green)  grid-[col-span-1,col-start-2]">
+<div class="flex-row-8 border-[6,red,solid] [&>div]:(size-30 bg-green)  grid-[col-span-1,col-start-2]">
 	<div class="bg-red-600  m-3"></div>
 	<div class="bg-red-600  m-3"></div>
 	<div class="bg-red-600  m-3"></div>
@@ -135,13 +139,13 @@ https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/4518491
 </div>
 
 
-<div class="grid grid-[rows-3,flow-col] grid-cols-[auto,1fr,10px] gap-4 px-6rem-8em">
-  <div class="row-[start-2,span-2] grid-area-one gap-2-6 px-6-1 inset-x-4 p-16rem-16-auto-auto">01</div>
+<div class="grid grid-[rows-3,flow-col] grid-cols-[auto,1fr,10px] gap-4 px-[6rem]-[8em]">
+  <div class="row-[start-2,span-2] grid-area-one gap-2-6 px-6-1 inset-x-4 p-[16rem]-16-auto-full">01</div>
   <div class="col-[end-3,span-2] bg-red grid-area-two">02</div>
   <div class="size-9-7">03</div>
-  <div class="size-9%-7rem m-7%-5rem-51-auto">09</div>
-  <div class="mx-8rem-4 mx-auto mx-10-5 py-88rem-88">03</div>
-  <div class="inset-x-5-9 inset-y-50%-9rem bg-[red,lg:[hover:green-100,green-600],md:pink]">03</div>
+  <div class="size-[9%]-[7rem] m-[7%]-[5rem]-screen-auto">09</div>
+  <div class="mx-8rem-4 mx-auto mx-10-5 py-[88rem]-88">03</div>
+  <div class="inset-x-5-9 inset-y-[50%]-[9rem] bg-[red,lg:[hover:green-100,green-600],md:pink]">03</div>
 </div>
 
 ```
