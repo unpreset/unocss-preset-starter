@@ -4,7 +4,7 @@
  @example
   margin : 2px 2px 2px 2px
  */
-export const removeDuplicateArrayPaddingOrMargin = (array: Array<string>) => {
+export const removeDuplicateArrayPaddingOrMargin = (array: Array<string>): Array<string> => {
 	switch (array.length) {
 		case 2:
 			if (array[0] === array[1]) {
