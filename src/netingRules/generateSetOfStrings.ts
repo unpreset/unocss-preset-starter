@@ -1,5 +1,5 @@
 import { joinArray } from "./utils";
-import { Slice } from "string-ts";
+
 /**
  * Description Genere Set of strings with tailwind style. No duplicate inside
  * @param {Category} 'category of element (text,bg,border)'
