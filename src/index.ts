@@ -1,8 +1,9 @@
 import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
+import { replace } from "string-ts";
 import Tailwind from "./netingRules";
-import { replace, join } from "string-ts";
-import { numberRemOrString, digitPlusUnit } from "./size";
+import { numberRemOrString, sizeRegex } from "./size";
+import { removeDuplicateArrayPaddingOrMargin } from "./utils";
 
 const Category: Readonly<Category[]> = ["col", "row", "grid", "font", "text", "bg", "border", "stroke", "outline", "underline", "ring", "divide"];
 
@@ -37,9 +38,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 				/^flex\|(\d+)?\|(\d+)?\|?([0-9]+(?:em|rem|%|vw)?)?$/,
 				([, grow = 0, shrink = 1, basis]: [unknown, number, number, string | "auto"]) => {
 					if (basis) {
-						if (Number(basis)) {
-							basis &&= numberRemOrString(basis);
-						}
+						if (Number(basis)) basis &&= numberRemOrString(basis);
+
 						return {
 							flex: `${grow} ${shrink} ${basis}`,
 						};
@@ -80,27 +80,27 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 				{ autocomplete: "flex-(col|row)-(1|2|3|4|5|6|7|8|9)" },
 			],
 			[
-				/^(p|m)-(\d+(?:em|rem|%|vw)?)-(\d+(?:em|rem|%|vw)?)?-?(\d+(?:em|rem|%|vw)?|auto)?-?(\d+(?:em|rem|%|vw)?|auto)?$/,
-				([, PaddingOrMargin, t, r, b, l]) => {
+				new RegExp(`^(p|m)-${sizeRegex.numberOrBracket.source}-${sizeRegex.numberOrBracket.source}-?${sizeRegex.numberOrBracket.source}?-?${sizeRegex.numberOrBracket.source}?-?${sizeRegex.numberOrBracket.source}?$`),
+				(match) => {
+					const [PaddingOrMargin, ...t_r_b_l] = sizeRegex.cleanerARRAY(match);
 					type isPad<T extends typeof PaddingOrMargin> = T extends "m" ? false : true;
-
 					const isPadding = (<T extends typeof PaddingOrMargin>(x: T) => {
 						return (x === "p") as isPad<"p">;
 					})(PaddingOrMargin);
 
 					const List: string[] = [];
-					for (const e of [t, r, b, l].filter(Boolean)) {
-						if (!e || e === "auto") {
-							List.push("auto");
-						} else List.push(numberRemOrString(e));
+					for (const e of removeDuplicateArrayPaddingOrMargin(t_r_b_l)) {
+						List.push(numberRemOrString(e));
 					}
 					return isPadding ? { padding: List.join(" ") } : { margin: List.join(" ") };
 				},
 				{ autocomplete: "(p|m)-<num>-<num>-<num>-<num>" },
 			],
 			[
-				new RegExp(`^(px|py|mx|my|gap)-(${digitPlusUnit.source}-?(${digitPlusUnit.source})?)$`),
-				([, direction, , s, optional]: [unknown, "px" | "py" | "mx" | "my" | "gap", null, string, string]) => {
+				new RegExp(`(^(?:p|m)(?:x|y)|gap)-(${sizeRegex.numberOrBracket.source}-?(${sizeRegex.numberOrBracket.source})?)$`),
+				(match: string[]) => {
+					const [direction, ...valueRegex] = sizeRegex.cleanerARRAY(match) as ["px" | "py" | "mx" | "my" | "gap", ...string[]];
+					const [s, optional] = [...new Set(valueRegex)];
 					const combination = {
 						px: "padding-inline",
 						py: "padding-block",
@@ -108,39 +108,40 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 						my: "margin-block",
 						gap: "gap",
 					} as const satisfies Record<typeof direction, string>;
-
-					const returndirection = combination[direction];
+					const returnDirection = combination[direction];
 					let value = "";
-
 					value = numberRemOrString(s);
 					value += optional ? ` ${numberRemOrString(optional)}` : "";
-
-					return { [returndirection]: value };
+					return { [returnDirection]: value };
 				},
 				{ autocomplete: "(gap|px|py|mx|my)-<num>-<num>" },
 			],
 
 			[
-				new RegExp(`^inset-(x|y)-(${digitPlusUnit.source}-?(${digitPlusUnit.source})?)$`),
-				([, direction, , s, optional]: [unknown, "x" | "y", unknown, string, string]) => {
+				new RegExp(`^inset-(x|y)-(${sizeRegex.numberOrBracket.source}-?(${sizeRegex.numberOrBracket.source})?)$`),
+				(match: string[]) => {
+					const [direction, ...valueRegex] = sizeRegex.cleanerARRAY(match) as ["x" | "y", ...string[]];
+					const [s, optional] = [...new Set(valueRegex)];
 					const combination = {
 						x: "inset-inline",
 						y: "inset-block",
 					} as const satisfies Record<typeof direction, string>;
 
-					const returndirection = combination[direction];
+					const returnDirection = combination[direction];
 					let value = "";
 					value = numberRemOrString(s);
 					value += optional ? ` ${numberRemOrString(optional)}` : "";
 
-					return { [returndirection]: value };
+					return { [returnDirection]: value };
 				},
 				{ autocomplete: "inset-(x|y)-<num>-<num>" },
 			],
 
 			[
-				new RegExp(`^size-(${digitPlusUnit.source}-?(${digitPlusUnit.source})?)$`),
-				([, , s, optional = s]: [unknown, unknown, string, string]): Record<"block-size" | "inline-size", string>[] => {
+				new RegExp(`^size-(${sizeRegex.numberOrBracket.source}-?(${sizeRegex.numberOrBracket.source}?)?)$`),
+				(match: string[]): Record<"block-size" | "inline-size", string>[] => {
+					const valueRegex = sizeRegex.cleanerARRAY(match);
+					const [s, optional = s] = [...new Set(valueRegex)] as [string, string];
 					return [
 						{
 							"block-size": numberRemOrString(s),
@@ -151,7 +152,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 				{ autocomplete: "size-<num>-<num>" },
 			],
 			[
-				/^(mx|my|mt|mb|ml|mr)-trim$/,
+				/(?<direction>^m(?:(x|y|t|b|l|r)))-trim\b$/,
 				([, s]: [unknown, "mx" | "my" | "mt" | "mb" | "ml" | "mr"]): Record<"margin-trim", "inline" | "block" | "block-start" | "block-end" | "inline-start" | "inline-end">[] => {
 					const dictionary = {
 						mx: "inline",
@@ -177,9 +178,8 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 				([, rl_lr = "lr"]: [unknown, "rl" | "lr"]): Record<string, `vertical-${typeof rl_lr}`> => {
 					const returnArr: string[] = ["-webkit-writing-mode", "-ms-writing-mode", "writingMode"];
 					const result: Record<string, `vertical-${typeof rl_lr}`> = {};
-					for (const e of returnArr) {
-						result[e] = `vertical-${rl_lr}`;
-					}
+					for (const e of returnArr) result[e] = `vertical-${rl_lr}`;
+
 					return result;
 				},
 				{ autocomplete: "vertical-(rl|lr)" },
@@ -195,7 +195,7 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 		] as Rule[],
 		shortcuts: [
 			[
-				new RegExp(`^(${join(Category, "|")})-\\[(.*)\\]$`),
+				new RegExp(`^(${Category.join("|")})-\\[(.*)\\]$`),
 				(match): string => {
 					const [, category, stringElement] = match as [unknown, Category, string];
 					return Tailwind(category, stringElement);

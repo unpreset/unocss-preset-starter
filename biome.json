@@ -12,7 +12,7 @@
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": false,
-		"lineWidth": 200,
-		"ignore": ["node_modules", "dist"]
+		"lineWidth": 220,
+		"ignore": ["node_modules", "dist", "doc"]
 	}
 }

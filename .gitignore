@@ -1,9 +1,10 @@
 node_modules
 playground
-dist
 *.log
 .vscode
 test.ts
 *.lockb
 .wireit/
 gum.sh
+test
+dist

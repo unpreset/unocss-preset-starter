@@ -1,6 +1,6 @@
 import { defineConfig, presetAttributify, presetIcons, presetTagify, presetWind, transformerDirectives, transformerVariantGroup } from "unocss";
 
-import unocssPresetWindExtra from "unocss-preset-wind-extra";
+import { unocssPresetWindExtra } from "unocss-preset-wind-extra";
 
 export default defineConfig({
 	//extractors: [extractorSvelte],
