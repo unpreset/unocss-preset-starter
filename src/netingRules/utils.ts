@@ -14,15 +14,18 @@ export function lastJoin(x: Set<string>): string {
  * @param {string[][]} array
  * @returns {string}
  */
-export function joinArray(array: string[][]): string {
-	if (array.length === 2) {
-		const [state, catANDcss] = array as [Before[], [Category, string]];
-		const result: [string, `${Category}-${string}`] = [join(state, ":"), `${catANDcss[0]}-${catANDcss[1]}`];
-		return join(result, ":");
-	} else if (array.length === 1) {
-		return join(array[0], "-") as `${Category}-${string}`;
-	} else {
-		throw new Error("limite 2 arrays joinArray");
+export function joinArray(array: string[][]): string | never {
+	switch (array.length) {
+		case 2: {
+			const [state, catANDcss] = array as [Before[], [Category, string]];
+			const result: [string, `${Category}-${string}`] = [join(state, ":"), `${catANDcss[0]}-${catANDcss[1]}`];
+			return join(result, ":");
+		}
+		case 1: {
+			return join(array[0], "-") as `${Category}-${string}`;
+		}
+		default:
+			throw new Error("limite 2 arrays joinArray");
 	}
 }
 
