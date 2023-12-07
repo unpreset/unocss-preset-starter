@@ -91,12 +91,7 @@ export const splitString = (arg_splitString: string): Set<string> => {
  * @returns {string[]} without duplicate in a string[]
  */
 export const removeDuplicates = (array: (string | Before)[]): string[] => {
-	const result: string[] = [];
-	for (const element of array) {
-		if (!result.includes(element)) {
-			result.push(element);
-		}
-	}
+	const result = [...new Set(array)];
 	return result;
 };
 

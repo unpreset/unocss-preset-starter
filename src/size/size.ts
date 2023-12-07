@@ -1,7 +1,7 @@
 import fraction from "./fraction";
 export const size = {
 	full: "100%",
-	screen: "100vw",
+	screen: "100lvw",
 	min: "min-content",
 	max: "max-content",
 	fit: "fit-content",
