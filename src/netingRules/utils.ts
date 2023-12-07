@@ -59,7 +59,9 @@ export const splitInsideBrakets = (x: string): string[][] | never => {
 
 export const splitString = (arg_splitString: string): Set<string> => {
 	const removeSpaceInString = (string: string): string => {
-		return trim(string).replace(/,+/g, " ").replace(/\s+/g, ",").replace(/\|/g, ",");
+		return trim(string)
+			.replace(/,+/g, " ")
+			.replace(/\|+|\s+/g, ",");
 	};
 	const result: Set<string> = new Set();
 	let parenthesesCount = true;
