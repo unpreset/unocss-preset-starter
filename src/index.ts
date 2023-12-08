@@ -18,18 +18,18 @@ const Category: Readonly<Category[]> = ["col", "row", "grid", "font", "text", "b
  *
  * @type {*}
  */
-export const unocssPresetWindExtra = definePreset((): Preset => {
+const unocssPresetWindExtra = definePreset((): Preset => {
 	return {
 		name: "unocssPresetWindExtra",
 		rules: [
 			[
 				/^family-([a-zA-Z_]*)$/,
 				(match) => {
-					let [, c = "Arial"] = match;
-					c &&= replace(c, "_", " ");
+					const [, c = "Arial"] = match;
+					const d = c && replace(c, "_", " ");
 
 					return {
-						"font-family": `${c}, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
+						"font-family": `${d}, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
 					};
 				},
 			],
@@ -38,11 +38,13 @@ export const unocssPresetWindExtra = definePreset((): Preset => {
 				/^flex\|(\d+)?\|(\d+)?\|?([0-9]+(?:em|rem|%|vw)?)?$/,
 				([, grow = 0, shrink = 1, basis]: [unknown, number, number, string | "auto"]) => {
 					if (basis) {
-						if (Number(basis)) basis &&= numberRemOrString(basis);
+						if (Number(basis)) {
+							const basisUp = numberRemOrString(basis);
 
-						return {
-							flex: `${grow} ${shrink} ${basis}`,
-						};
+							return {
+								flex: `${grow} ${shrink} ${basisUp}`,
+							};
+						}
 					}
 					return {
 						flex: `${grow} ${shrink}`,

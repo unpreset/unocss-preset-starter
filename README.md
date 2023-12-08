@@ -81,6 +81,7 @@ It reqiuere the ```presetWind()``` [Preset-wind](https://www.npmjs.com/package/@
 
 ## Flexbox shortcut
 ![flexbox](https://github.com/jojojojojoj5564656465465/unocss-preset-starter/assets/45184918/f498deac-e3b2-40b0-96f6-a73c37f85553)
+![Flexbox](doc/flexbox-unocss.gif)
 Decompose the layout of the divs in a grid from 1 to 9.
 
 ```md
@@ -95,7 +96,7 @@ flex-col-4 = justify-items-start items-center flex flex-col
 ```html
 <div class="flex-row-2 border-3 size-100 [&>div]:(size-6)">
 	<div class="bg-red-200! m-3"></div>
-	<div class="bg-red-600 	m-3"></div>
+	<div class="bg-red-600 m-3"></div>
 	<div class="bg-[#ffff] m-3"></div>
 </div>
 ```

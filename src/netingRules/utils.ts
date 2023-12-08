@@ -47,7 +47,7 @@ export const splitInsideBrakets = (x: string): string[][] | never => {
 			return [[x]];
 		}
 	} else {
-		throw new Error("error in Syntax ':' is missing OR '('  ')' IS NOT ALLOWED ");
+		throw new Error("error in Syntax ':[]' is missing OR '('  ')' IS NOT ALLOWED \n no dynamic values please \n\n ");
 	}
 };
 
@@ -100,4 +100,5 @@ export const removeDuplicates = (array: (string | Before)[]): string[] => {
 export const regex: Record<string, RegExp> = {
 	nestedBrackets: new RegExp("(\\w+):\\[(.+?)\\]|(\\w+)?:?(\\w+):\\[(.+?)\\]"),
 	beforeCapture: new RegExp("(?<before>.*):\\[(?<cssInside>.*)\\]"),
+	dynamicUnitBracks: new RegExp("(?<!:)\\[(?<cssDynamicUnit>\\d+[a-z]+)\\]"),
 };

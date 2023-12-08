@@ -6,7 +6,6 @@ import { split } from "string-ts";
 function nestedElement(x: string): NestedElementResult | Omit<NestedElementResult, "before"> {
 	// Check if the string contains nested elements like "hover:[red,3xl]"
 	const match: regexArray = x.match(regex.beforeCapture);
-
 	if (regex.nestedBrackets.test(x) && match) {
 		const obj = {
 			_before: match?.groups?.before,
