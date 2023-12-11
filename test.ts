@@ -1,3 +1,4 @@
+//import { Replace } from "string-ts";
 const text = "red,hover:green,lg:[orange,hover:[pink,center,cc:[ref,fe]]]";
 const text2 = "red,hover:green,lg:orange,lg:hover:pink,lg:hover:center";
 // step 2 ==>"red,hover:green,lg:[orange,hover:pink,hover:center]"
@@ -5,9 +6,8 @@ const text2 = "red,hover:green,lg:orange,lg:hover:pink,lg:hover:center";
 
 // step 2 ==>"red,hover:green,lg:[orange]"
 const Temptext = text;
-
+/*
 const initialFn = (text: string) => {
-
     const Temptext = text;
     const laRegex = (x: string): string => {
         const nestedBrackets = new RegExp("(?<before>\\w+):\\[(?<css>.+)\\]");
@@ -21,47 +21,46 @@ const initialFn = (text: string) => {
         } else {
             //console.log(TempInput);
 
-
-
             const replacing = Temptext.replace(TempInput, beforeAndCss);
             const isNextRecursion = nestedBrackets.test(replacing);
-
 
             //return isNextRecursion ? laRegex(replacing) : replacing;
         }
     };
     laRegex(text);
 };
-
-
+*/
 class TailwindCompressor {
     texte: string;
     constructor(texte: string) {
         this.texte = texte;
         this.Temp.set("Initial", texte);
-    }  
-    get ShowText(): string {
-        return this.texte;
     }
+    get showTexte() {
+        return this.texte
+    }
+
+    set showTexte(x: string) {
+        this.showTexte.replace(this.Temp.get("Input") ?? "error", x)
+    }
+
     #nestedBrackets = new RegExp("(?<before>\\w+):\\[(?<css>.+)\\]");
     numberOfRegex = 0;
 
     Temp: Map<string, string> = new Map([
-
+        ["PreviousInput", ""],
         ["Input", ""],
         ["Before", ""],
         ["Css", ""],
     ]);
-
-  
     isNestingRegex(x = this.texte): boolean {
         const yesRegex = this.#nestedBrackets.test(x);
         if (yesRegex) {
-            this.numberOfRegex++
-            this.TempInputUpdater(x)
+            this.numberOfRegex++;
+            this.TempInputUpdater(x);
         } else {
             this.numberOfRegex--;
-            this.Temp.delete("Input")
+            this.Temp.delete("Input");
         }
         return yesRegex;
     }
@@ -71,7 +70,7 @@ class TailwindCompressor {
     TempBeforeUpdater() {
         const before = this.Temp.get("Input")?.match(this.#nestedBrackets)?.groups?.before ?? "error";
         if (before) {
-            this.Temp.set("Before", before)
+            this.Temp.set("Before", before);
         } else {
             this.Temp.delete("Before");
         }
@@ -84,10 +83,12 @@ class TailwindCompressor {
             this.Temp.delete("Css");
         }
     }
-    recursiveFnRegex(x = this.ShowText) {
+    recursiveFnRegex(x = this.showTexte) {
         if (this.isNestingRegex(x)) {
-            if (this.numberOfRegex < 9) {
-                //this.recursiveFnRegex(this.TempInput)
+            if (this.numberOfRegex < 19) {
+                this.TempBeforeUpdater();
+                this.TempCssUpdater();
+                this.recursiveFnRegex(this.Temp.get("Before"))
             }
         } else {
             console.log("this.numberOfRegex🔸🔸 ", this.numberOfRegex);
@@ -95,19 +96,17 @@ class TailwindCompressor {
         }
     }
     beforeAndCss(x: string): string {
-        return x
+        this.showTexte = x
             .split(",")
             .map((e: string) => `${this.Temp.get("Before")}:${e}`)
             .join(",");
+        return this.showTexte
     }
-    
-    
 }
 
 const cc = new TailwindCompressor("red,hover:green,lg:[orange,hover:[pink,center]]");
-cc.isNestingRegex();
-cc.TempBeforeUpdater()
-cc.TempCssUpdater()
-cc.recursiveFnRegex()
+
+
+cc.recursiveFnRegex();
 console.log("cc.isNestingRegex()🔸🔸 ", cc.Temp);
-console.log('number Of Regex🔸🔸 :', cc.numberOfRegex);
+console.log("number Of Regex🔸🔸 :", cc.numberOfRegex);
