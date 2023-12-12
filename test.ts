@@ -1,34 +1,19 @@
-//import { Replace } from "string-ts";
-const text = "red,hover:green,lg:[orange,hover:[pink,center,cc:[ref,fe]]]";
+
 const text2 = "red,hover:green,lg:orange,lg:hover:pink,lg:hover:center";
 // step 2 ==>"red,hover:green,lg:[orange,hover:pink,hover:center]"
 // goal =  'red,hover:green,lg:orange,lg:hover:pink,lg:hover:center'
 
+const text = "red,hover:green,lg:[orange,hover:[pink,center]]";
 // step 2 ==>"red,hover:green,lg:[orange]"
-const Temptext = text;
-/*
-const initialFn = (text: string) => {
-    const Temptext = text;
-    const laRegex = (x: string): string => {
-        const nestedBrackets = new RegExp("(?<before>\\w+):\\[(?<css>.+)\\]");
-        const bool = nestedBrackets.test(x);
 
-        if (bool) {
-            TempInput = nestedBrackets.exec(x)?.[0] ?? TempInput;
-            const theMatch: string = x.match(nestedBrackets)?.groups?.css ?? "error";
-            TempBefore = x.match(nestedBrackets)?.groups?.before ?? TempBefore;
-            return laRegex(theMatch as string);
-        } else {
-            //console.log(TempInput);
 
-            const replacing = Temptext.replace(TempInput, beforeAndCss);
-            const isNextRecursion = nestedBrackets.test(replacing);
+/* 
+I want to make a code than will convert a string of text by removing brakets like my exemple i give you bellow. If you know tailwind it's to convert to a tailwind like syntax. My code is a typescript
+code. 
+input String : red,hover:green,lg:[orange,hover:[pink,center]]
+Output string wanted : red,hover:green,lg:orange,lg:hover:pink,lg:hover:center
 
-            //return isNextRecursion ? laRegex(replacing) : replacing;
-        }
-    };
-    laRegex(text);
-};
+Edit the code i give you 
 */
 class TailwindCompressor {
     texte: string;
@@ -36,15 +21,15 @@ class TailwindCompressor {
         this.texte = texte;
         this.Temp.set("Initial", texte);
     }
-    get showTexte() {
+    get _texte() {
         return this.texte
     }
 
-    set showTexte(x: string) {
-        this.showTexte.replace(this.Temp.get("Input") ?? "error", x)
+    set _texte(x: string) {
+        this._texte.replace(this.Temp.get("Input") as string, x)
     }
 
-    #nestedBrackets = new RegExp("(?<before>\\w+):\\[(?<css>.+)\\]");
+    #nestedBrackets: RegExp = new RegExp("(?<before>\\w+):\\[(?<css>.+)\\]");
     numberOfRegex = 0;
 
     Temp: Map<string, string> = new Map([
@@ -55,17 +40,13 @@ class TailwindCompressor {
     ]);
     isNestingRegex(x = this.texte): boolean {
         const yesRegex = this.#nestedBrackets.test(x);
-        if (yesRegex) {
-            this.numberOfRegex++;
-            this.TempInputUpdater(x);
-        } else {
-            this.numberOfRegex--;
-            this.Temp.delete("Input");
-        }
         return yesRegex;
     }
     TempInputUpdater(x: string) {
-        this.Temp.set("Input", this.#nestedBrackets.exec(x)?.[0] as string);
+        const tempInput = this.#nestedBrackets.exec(x)?.[0] as string
+        this.Temp.set("Input", tempInput);
+        this.TempBeforeUpdater();
+        this.TempCssUpdater();
     }
     TempBeforeUpdater() {
         const before = this.Temp.get("Input")?.match(this.#nestedBrackets)?.groups?.before ?? "error";
@@ -80,27 +61,38 @@ class TailwindCompressor {
         if (css) {
             this.Temp.set("Css", css as string);
         } else {
+            console.log("else no css detected");
             this.Temp.delete("Css");
         }
     }
-    recursiveFnRegex(x = this.showTexte) {
+    recursiveFnRegex(x = this._texte) {
         if (this.isNestingRegex(x)) {
-            if (this.numberOfRegex < 19) {
-                this.TempBeforeUpdater();
-                this.TempCssUpdater();
-                this.recursiveFnRegex(this.Temp.get("Before"))
+            if (this.numberOfRegex < 9) {
+                this.numberOfRegex++;
+                this.TempInputUpdater(x);
+                this.recursiveFnRegex(this.Temp.get("css"))
+                console.log('Map🔸🔸 ', this.Temp);
+                console.log('this.numberOfRegex🔸🔸 ', this.numberOfRegex);
             }
         } else {
-            console.log("this.numberOfRegex🔸🔸 ", this.numberOfRegex);
-            this.numberOfRegex > 0 ? this.beforeAndCss(x) : console.log("finish");
+            console.log('no regex found');
+            this.numberOfRegex--;
+            this.Temp.delete("Input");
+            this._texte &&= this.beforeAndCss(this.Temp.get("Before") ?? "error")
+            this.numberOfRegex > 1 ? this.recursiveFnRegex() : console.log('finish');
+
+
         }
+        
+
+
     }
     beforeAndCss(x: string): string {
-        this.showTexte = x
+        return x
             .split(",")
             .map((e: string) => `${this.Temp.get("Before")}:${e}`)
             .join(",");
-        return this.showTexte
+
     }
 }
 
@@ -108,5 +100,10 @@ const cc = new TailwindCompressor("red,hover:green,lg:[orange,hover:[pink,center
 
 
 cc.recursiveFnRegex();
-console.log("cc.isNestingRegex()🔸🔸 ", cc.Temp);
-console.log("number Of Regex🔸🔸 :", cc.numberOfRegex);
+// console.log("cc.isNestingRegex()🔸🔸 ", cc.Temp);
+// const ads = cc.isNestingRegex(cc._texte)
+// console.log('cc.isNestingRegex🔸🔸 ', ads);
+// cc.TempInputUpdater(cc._texte)
+// console.log('cc.TempInputUpdater🔸🔸 ', cc.TempInputUpdater);
+
+// console.log("number Of Regex🔸🔸 :", cc.numberOfRegex);
