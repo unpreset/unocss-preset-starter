@@ -1,4 +1,4 @@
-
+import { splitString } from './src/netingRules/utils.ts'
 const text2 = "red,hover:green,lg:orange,lg:hover:pink,lg:hover:center";
 // step 2 ==>"red,hover:green,lg:[orange,hover:pink,hover:center]"
 // goal =  'red,hover:green,lg:orange,lg:hover:pink,lg:hover:center'
@@ -17,9 +17,16 @@ Edit the code i give you
 */
 class TailwindCompressor {
     texte: string;
+    Temp: Map<string, string> = new Map([
+        ["Input", ""],
+        ["Before", ""],
+        ["Css", ""],
+    ]);
+
     constructor(texte: string) {
         this.texte = texte;
         this.Temp.set("Initial", texte);
+
     }
     get _texte() {
         return this.texte
@@ -29,18 +36,29 @@ class TailwindCompressor {
         this._texte.replace(this.Temp.get("Input") as string, x)
     }
 
-    #nestedBrackets: RegExp = new RegExp("(?<before>\\w+):\\[(?<css>.+)\\]");
-    numberOfRegex = 0;
+    countOfRegex = {
+        count: 0,
+        text: this._texte,
+        reduce(): void {
+            this.count--;
+        },
+        countfn(): void {
+            for (const eachLetter of this.text) {
+                if (eachLetter.includes("[")) {
+                    this.count++;
+                }
+            }
+        }
+    };
 
-    Temp: Map<string, string> = new Map([
-        ["PreviousInput", ""],
-        ["Input", ""],
-        ["Before", ""],
-        ["Css", ""],
-    ]);
+
+    #nestedBrackets: RegExp = new RegExp("(?<before>\\w+):\\[(?<css>.+)\\]");
+
+
+
     isNestingRegex(x = this.texte): boolean {
-        const yesRegex = this.#nestedBrackets.test(x);
-        return yesRegex;
+        return this.#nestedBrackets.test(x);
+
     }
     TempInputUpdater(x: string) {
         const tempInput = this.#nestedBrackets.exec(x)?.[0] as string
@@ -67,23 +85,22 @@ class TailwindCompressor {
     }
     recursiveFnRegex(x = this._texte) {
         if (this.isNestingRegex(x)) {
-            if (this.numberOfRegex < 9) {
-                this.numberOfRegex++;
+            if (this.countOfRegex.count < 9) {
                 this.TempInputUpdater(x);
                 this.recursiveFnRegex(this.Temp.get("css"))
                 console.log('Map🔸🔸 ', this.Temp);
-                console.log('this.numberOfRegex🔸🔸 ', this.numberOfRegex);
+                console.log('this.numberOfRegex🔸🔸 ', this.countOfRegex.count);
             }
         } else {
             console.log('no regex found');
-            this.numberOfRegex--;
+            this.countOfRegex.reduce();
             this.Temp.delete("Input");
             this._texte &&= this.beforeAndCss(this.Temp.get("Before") ?? "error")
-            this.numberOfRegex > 1 ? this.recursiveFnRegex() : console.log('finish');
+            this.countOfRegex.count > 1 ? this.recursiveFnRegex() : console.log('finish');
 
 
         }
-        
+
 
 
     }
@@ -99,7 +116,7 @@ class TailwindCompressor {
 const cc = new TailwindCompressor("red,hover:green,lg:[orange,hover:[pink,center]]");
 
 
-cc.recursiveFnRegex();
+//cc.recursiveFnRegex();
 // console.log("cc.isNestingRegex()🔸🔸 ", cc.Temp);
 // const ads = cc.isNestingRegex(cc._texte)
 // console.log('cc.isNestingRegex🔸🔸 ', ads);
