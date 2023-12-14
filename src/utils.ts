@@ -10,7 +10,7 @@ export const removeDuplicateArrayPaddingOrMargin = (array: Array<string>): Array
 			if (array[0] === array[1]) {
 				array.pop();
 			}
-			if ([...new Set(array)].length === 1) {
+			if (new Set(array).size === 1) {
 				array.splice(1, 2);
 			}
 			break;
@@ -18,7 +18,7 @@ export const removeDuplicateArrayPaddingOrMargin = (array: Array<string>): Array
 			if (array[1] === array[2]) {
 				array.pop();
 			}
-			if ([...new Set(array)].length === 1) {
+			if (new Set(array).size === 1) {
 				array.splice(1, 3);
 			}
 			break;
@@ -29,7 +29,7 @@ export const removeDuplicateArrayPaddingOrMargin = (array: Array<string>): Array
 				}
 				array.splice(2, 1);
 			}
-			if ([...new Set(array)].length === 1) {
+			if (new Set(array).size === 1) {
 				array.splice(1, 3);
 			}
 			break;
