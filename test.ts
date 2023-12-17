@@ -50,7 +50,7 @@ class TailwindCompressor {
     TempBeforeUpdater() {
         const beforeRegex = new RegExp('(?<before>.+):\\[');
         const before = this.Temp.get("Input")?.match(beforeRegex)?.groups?.before ?? "error Before regex";
-        console.log('his.Temp.get("Input")🔸🔸 ', this.Temp.get("Input"));
+
 
         /** 
          * probeme avec la regex before 
@@ -74,28 +74,63 @@ class TailwindCompressor {
     }
 
 
-    beforeAndCss(x = this.Temp.get("Css") ?? ""): string {
-        return x
+    beforeAndCss(x = this.Temp.get("Css") ?? "error beforeAndCss"): string {
+        const temp = x
             .split(",")
             .map((e: string) => `${this.Temp.get("Before")}:${e}`)
+
             .join(",");
+        return temp
     }
+
+    beforeAndCss2 (x = this.Temp.get("Css") ?? "error beforeAndCss"): string{
+        const isBefore = this.Temp.has("Before")
+        if (!isBefore) {
+            console.log('there is no before🔸🔸 ');
+        }
+        const BeforeSet: Set<string> = new Set();
+        const before = this.Temp.get("Before") ?? "error : error :before"
+        for (const element of before.split(":")) {
+            BeforeSet.add(element);
+        }
+        return x
+            .split(",")
+            .map((e: string) => {
+                const BeforeSetCSS = new Set();
+                const css = (x: string): string => {
+                    const temp: string[] = x.split(":");
+                    for (const element of temp.slice(0, -1)) {
+                        if (element) {
+                            BeforeSetCSS.add(element);
+                        }
+                    }
+                    return temp.pop() ?? x;
+                };
+                const cssString = css(e);
+                const before = [...BeforeSet, ...BeforeSetCSS].join(":");
+                return `${before}:${cssString}`;
+            })
+            .join(",");
+    };
+
+
     #forLoopIncreament = 0;
     forLoop() {
         // je dois faire un autre for au dessus
         this.TempInputUpdater(this.Temp.get("Initial") ?? this._texte);
-        for (let index = 1; index !== this.numberOfBrackets-this.#forLoopIncreament; index++) {
+        for (let index = 1; index !== this.numberOfBrackets - this.#forLoopIncreament; index++) {
             if (this.Temp.has("Css")) {
                 this.TempInputUpdater(this.Temp.get("Css") as string);
             }
         }
         this.Temp.set(this.Temp.get("Before") ?? "error before", this.Temp.get("Css") ?? "error css")
-        this.Temp.set("Output", this.beforeAndCss());
+        this.Temp.set("Output", this.beforeAndCss2());
         this.Temp.set("Initial", replace(this.Temp.get("Initial") as string, this.Temp.get("Input") as string, this.Temp.get("Output") as string));
-      
-        for (const iterator of ["Css", "Before", "Input", "Output"]) {
-            this.Temp.delete(iterator)
-        }
+        
+          for (const iterator of ["Css", "Before", "Input", "Output"]) {
+              this.Temp.delete(iterator)
+          }
+   
         this.#forLoopIncreament++;
         console.log("Initial🔸🔸 ", this.Temp);
         this.forLoop()
@@ -103,10 +138,11 @@ class TailwindCompressor {
     }
 }
 
-const text = "lg:[orange,hover:[pink,center,x:[rrr,hover:lg:ffl]]]"; // lg:[orange,[hover,[pink,center]]]
-const text3= "lg:hover:[hg]"
+const text = "lg:[orange,hover:[pink,center,x:[rrr,hover:lg:ffl,hover:[red]]]]"; // lg:[orange,[hover,[pink,center]]]
+const text3 = "lg:hover:[hg,bb,hh:yh,hh:bb:hh:bb]";
+const text4 = "lg:[hg]";
 //const cc = new TailwindCompressor("red,hover:green,lg:[orange,hover:[pink,center]]");
-const textInArray = splitString(text3);
+const textInArray = splitString(text);
 for (const e of filterRegexOnly(textInArray)) {
     const ccd = new TailwindCompressor(e);
     ccd.forLoop();
