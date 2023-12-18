@@ -102,3 +102,6 @@ export const regex: Record<string, RegExp> = {
 	beforeCapture: new RegExp("(?<before>.*):\\[(?<cssInside>.*)\\]"),
 	dynamicUnitBracks: new RegExp("(?<!:)\\[(?<cssDynamicUnit>\\d+[a-z]+)\\]"),
 };
+export const filterRegexOnly = (arrFrom_splitString: Set<string>): string[] => {
+	return Array.from(arrFrom_splitString).filter((e) => regex.nestedBrackets.test(e));
+};
