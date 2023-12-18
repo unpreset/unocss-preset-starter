@@ -1,14 +1,6 @@
 import { replace } from "string-ts";
 import { splitString, filterRegexOnly } from "./src/netingRules/utils";
 
-/* 
-I want to make a code than will convert a string of text by removing brakets like my exemple i give you bellow. If you know tailwind it's to convert to a tailwind like syntax. My code is a typescript
-code. 
-input String : red,hover:green,lg:[orange,hover:[pink,center]]
-Output string wanted : red,hover:green,lg:orange,lg:hover:pink,lg:hover:center
-
-Edit the code i give you 
-*/
 class TailwindCompressor {
 	texte: string;
 	Temp: Map<string, string | undefined> = new Map();
@@ -20,8 +12,7 @@ class TailwindCompressor {
 		return this.texte;
 	}
 	set _texte(x: string) {
-        this.texte = x;
-
+		this.texte = x;
 	}
 	get numberOfBrackets(): number {
 		if ((this._texte.match(/\[/g) || []).length === (this._texte.match(/\]/g) || []).length) {
@@ -62,7 +53,7 @@ class TailwindCompressor {
 			this.Temp.delete("Css");
 		}
 	}
-	beforeAndCss(x = this.Temp.get("Css") ?? "error beforeAndCss"): string {
+	beforeAndCss(x = this.Temp.get("Css") ?? "error beforeAndCss"): string[] {
 		const BeforeSet: Set<string> = new Set();
 		const before = this.Temp.get("Before") ?? "error : error :before";
 		for (const element of before.split(":")) {
@@ -85,7 +76,7 @@ class TailwindCompressor {
 				const before = [...BeforeSet, ...BeforeSetCSS].join(":");
 				return `${before}:${cssString}`;
 			})
-			.join(",");
+			//  .join(",");  je veux pas car je veux envoyer dans le set
 	}
 	#forLoopIncreament = 0;
 	forLoop() {
@@ -105,20 +96,19 @@ class TailwindCompressor {
 			this.Temp.delete(iterator);
 		}
 		this.#forLoopIncreament++;
-
 		this.forLoop();
 	}
 }
 
-const text = "lg:[red,hover:[green,3xl,first:[yellow,1xl]]]"; // lg:[orange,[hover,[pink,center]]]
-const text3 = "lg:hover:[hg,bb,hh:yh,hh:bb:hh:bb]";
-const text4 = "lg:[hg]";
+const text = "lg:[red,hover:[green,3xl,first:[yellow,1xl]]],hover:[orange],hover:orange"; // lg:[orange,[hover,[pink,center]]]
 
 const textInArray = splitString(text);
 for (const e of filterRegexOnly(textInArray)) {
-	const ccd = new TailwindCompressor(e);
+    const ccd = new TailwindCompressor(e);
 	ccd.forLoop();
-	const result = ccd.Temp.get("Initial") as string;
-	ccd._texte = result
-	console.log("text result ::🔸🔸 ", ccd.texte);
+	ccd._texte = ccd.Temp.get("Initial") as string;
+	console.log("text result ::🔸🔸 ", );
+    textInArray.add(ccd.texte)
 }
+
+console.log('textInArray🔸🔸 ', textInArray);
