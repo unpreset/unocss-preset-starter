@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="custom-rule">
-      Unpreset       Starter
+      Unpreset Starter
     </div>
     <div class="flex">
       <div class="bg-white text-center col-3">
