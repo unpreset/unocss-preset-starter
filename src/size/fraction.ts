@@ -8,8 +8,11 @@
  *
  * @returns {object} DICTIONARY
  */
-const fraction = (x = 8) => {
-	const obj: Record<string, string> = {};
+export type fraction = `${number}/${number}`;
+type pourcentage = `${number}%`;
+
+export const fraction = (x = 8): Record<fraction, pourcentage> => {
+	const obj: Record<fraction, pourcentage> = {};
 	for (let i = 1; i < x; i++) {
 		for (let j = 1; j < i; j++) {
 			obj[`${j}/${i}`] = `${(j / i) * 100}%`;

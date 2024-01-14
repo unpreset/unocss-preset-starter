@@ -1,5 +1,4 @@
 type regexArray = RegExpMatchArray | null;
-
 type Category = "col" | "row" | "grid" | "font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
 type currentElement<T extends boolean> = T extends true ? "" : string;
 
@@ -90,3 +89,42 @@ type Mapp = Map<"Category", Category>;
 type Enumerate<N extends number, Acc extends number[] = []> = Acc["length"] extends N ? Acc[number] : Enumerate<N, [...Acc, Acc["length"]]>;
 
 type IntRange<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>;
+
+type InterValueFromColor<Color extends string> = Color extends `${infer N}-${infer C}-${infer T}` ? { namespace: N; color: C; tone: T } : never;
+
+type TailwindExtra<Match extends string> = Match extends `${infer N extends Category}-[${infer C}]` ? { Category: N; stringElement: C } : never;
+type SplitInsideBrakets<Inside extends string> = Inside extends `${infer N extends Before}:[${infer C}]` ? { before: N; stringElement: C } : string;
+
+type JoinArrayResult<T extends Before[], U extends [Category, string]> = T extends [Before, Before] ? [string, `${Category}-${string}`] : T extends [Before] ? `${Category}-${string}` : never;
+
+interface FixedLengthArray<T extends unknown[], L extends number> {
+	length: L;
+}
+type LengthOfArray<Type extends readonly unknown[]> = Type["length"];
+type LastInArray<Type extends unknown[]> = Type extends [...unknown[], infer R] ? R : never;
+type RemoveLastInArray<Type extends unknown[]> = Type extends [...infer R, unknown] ? R : never;
+
+type inff<T extends string> = T extends `bg-${infer N extends string}` ? N : never;
+
+type LastOrString<Type extends string | string[]> = Type extends unknown[] ? LastInArray<Type> : Type;
+
+type LastOfArray<T extends any[]> = T extends [...T[number], infer U] ? U : never;
+type Pop<T extends unknown[]> = T extends [...infer R, infer _] ? R : never;
+type Regex = `${string}:[${string}]`;
+
+type IsRegex<RegexType> = RegexType extends `${infer Bef}:[${infer inside}]` ? true : false;
+
+type IsRegex2<RegexType> = RegexType extends `${infer Bef}:[${infer inside}]`
+	? {
+			before: Bef;
+			inside: inside;
+	  }
+	: never;
+
+interface ReturnFlex {
+	display: "flex";
+	"flex-direction": "row" | "column";
+	"justify-content": "start" | "center" | "end";
+	"align-items": "start" | "center" | "end";
+}
+type UnionValueDictionary<T extends Record<string, string>> = T[keyof T];

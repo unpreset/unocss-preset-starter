@@ -1,5 +1,5 @@
 import fraction from "./fraction";
-export const size = {
+export let size = {
 	full: "100%",
 	screen: "100lvw",
 	min: "min-content",
@@ -7,7 +7,8 @@ export const size = {
 	fit: "fit-content",
 	fill: "fill",
 	auto: "auto",
-	...fraction(),
-} as const;
+} satisfies Record<string, string>;
 
-export default size;
+size = Object.assign(size, fraction());
+
+export default Object.freeze(size);

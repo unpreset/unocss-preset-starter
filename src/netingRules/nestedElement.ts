@@ -41,3 +41,5 @@ function nestedElement(x: string): NestedElementResult | Omit<NestedElementResul
 }
 
 export default nestedElement;
+const rez = nestedElement('lg:hover:[red,lg:hover:red]')
+console.log(rez);

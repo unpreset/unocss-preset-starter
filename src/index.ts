@@ -45,6 +45,9 @@ const unocssPresetWindExtra = definePreset((): Preset => {
 								flex: `${grow} ${shrink} ${basisUp}`,
 							};
 						}
+						return {
+							flex: `${grow} ${shrink} ${basis}`,
+						};
 					}
 					return {
 						flex: `${grow} ${shrink}`,
@@ -54,7 +57,7 @@ const unocssPresetWindExtra = definePreset((): Preset => {
 			],
 			[
 				/^flex-(row|col)-([1-9])$/,
-				([, direction = "row", flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): Record<string, string> => {
+				([, direction = "row", flexNumber]: [unknown, "row" | "col", IntRange<1, 10>]): ReturnFlex => {
 					type PositionProps = Readonly<"start" | "center" | "end">;
 					const positions = {
 						1: ["start", "start"],
@@ -110,7 +113,7 @@ const unocssPresetWindExtra = definePreset((): Preset => {
 						my: "margin-block",
 						gap: "gap",
 					} as const satisfies Record<typeof direction, string>;
-					const returnDirection = combination[direction];
+					const returnDirection: UnionValueDictionary<typeof combination> = combination[direction];
 					let value = "";
 					value = numberRemOrString(s);
 					value += optional ? ` ${numberRemOrString(optional)}` : "";
@@ -165,7 +168,7 @@ const unocssPresetWindExtra = definePreset((): Preset => {
 						mr: "inline-end",
 					} as const satisfies Record<typeof s, string>;
 
-					const resultFunction = (x: keyof typeof dictionary) => dictionary[x];
+					const resultFunction = (x: keyof typeof dictionary): UnionValueDictionary<typeof dictionary> => dictionary[x];
 
 					return [
 						{

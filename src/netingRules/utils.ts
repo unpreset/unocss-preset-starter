@@ -63,7 +63,7 @@ export const splitString = (arg_splitString: string): Set<string> => {
 			.replace(/,+/g, " ")
 			.replace(/\|+|\s+/g, ",");
 	};
-	const result: Set<string> = new Set();
+	const result = new Set<string>();
 	let parenthesesCount = true;
 	let currentElement: currentElement<typeof parenthesesCount> = "";
 
@@ -93,8 +93,7 @@ export const splitString = (arg_splitString: string): Set<string> => {
  * @returns {string[]} without duplicate in a string[]
  */
 export const removeDuplicates = (array: (string | Before)[]): string[] => {
-	const result = [...new Set(array)];
-	return result;
+	return [...new Set(array)];
 };
 
 export const regex: Record<string, RegExp> = {
@@ -102,6 +101,30 @@ export const regex: Record<string, RegExp> = {
 	beforeCapture: new RegExp("(?<before>.*):\\[(?<cssInside>.*)\\]"),
 	dynamicUnitBracks: new RegExp("(?<!:)\\[(?<cssDynamicUnit>\\d+[a-z]+)\\]"),
 };
-export const filterRegexOnly = (arrFrom_splitString: Set<string>): string[] => {
-	return Array.from(arrFrom_splitString).filter((e) => regex.nestedBrackets.test(e));
+export const filterRegexOnly = (setFrom_splitString: Set<string>): Regex[] => {
+	const listFoundRegex = Array.from(setFrom_splitString).filter((e) => regex.nestedBrackets.test(e)) as Regex[];
+
+	for (const eACH_splitString of setFrom_splitString) {
+		if (listFoundRegex.some((listFoundRegex_ELEMENT) => includes(eACH_splitString, listFoundRegex_ELEMENT))) {
+			setFrom_splitString.delete(eACH_splitString);
+		}
+	}
+
+	return listFoundRegex;
 };
+export function eliminerUndefined<T>(input: unknown, msg?: string): asserts input is T {
+	if (input === undefined) {
+		throw new Error(msg ?? "Value is undefined");
+	}
+	if (input === null) {
+		throw new Error(msg ?? "Value is null");
+	}
+}
+export function errorNoRegex(input: string): asserts input is Regex {
+	if (input === undefined) {
+		throw new Error("Value is undefined");
+	}
+	if (!regex.nestedBrackets.test(input)) {
+		throw new Error("Value is not a regex Expression Valid !");
+	}
+}

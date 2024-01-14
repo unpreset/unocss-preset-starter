@@ -13,7 +13,6 @@ const generateSetOfStrings = (category: string, obj_Before_Css: NestedElementRes
 
 	cssInside.flatMap((e) => {
 		const temporaryMap = new Map();
-
 		if (Object.hasOwn(obj_Before_Css, "before") || e.length > 1) {
 			const tempState = e.slice(0, -1) as Before[];
 			const { before } = obj_Before_Css as { before: Before[] };
@@ -22,6 +21,7 @@ const generateSetOfStrings = (category: string, obj_Before_Css: NestedElementRes
 		}
 		temporaryMap.set("category_&&_css", [category, e.pop()]) as Map<string, [Category, string]>; //[bg,red]
 		const valuesArrayCatCSS: string[][] = Array.from(temporaryMap.values());
+
 		const valuesArrayCatCss_JOIN: string = joinArray(valuesArrayCatCSS);
 		FINAL_SET.add(valuesArrayCatCss_JOIN);
 	});
