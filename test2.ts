@@ -1,15 +1,13 @@
 import { join, replace, split } from "string-ts";
-import { splitString, filterRegexOnly, eliminerUndefined, errorNoRegex, splitInsideBrakets, moveToSetIfNoRegex, TempMap, isRegexP } from "./src/netingRules/utils";
+import { splitString, filterRegexOnly, eliminerUndefined, errorNoRegex, splitInsideBrakets, moveToSetIfNoRegex, TempMap, isRegexP, pipe, finalStringProcess } from "./src/netingRules/utils";
 type MatchRegex = {
 	Before: Before[];
 	css: string;
 };
 
 const tempSet = new Set<string>();
-const a = "lg:hover:[red,focus:[green],hover:[blue]]";
-//const mysplit = splitString(a);
-// console.log('mysplit🔸🔸 ', mysplit);
-//const allRegexList = filterRegexOnly(mysplit);
+
+
 
 class IfRegex {
 	texte: string;
@@ -19,45 +17,42 @@ class IfRegex {
 		this.texte = texte;
 		this.recursive = recurs;
 	}
-	get _texte() {
+	get _texte(): string {
 		if (this.texte === undefined) throw new Error("this.texte is undefined");
 		return this.texte;
 	}
-	set _texte(x: string) {
-
-		this.isNestingRegex(x);
-		this.texte = x;
+	set _texte(x: Set<string>) {
+		const arr = Array.from(x).filter(Boolean)
+		this.texte = join(arr, ":")
 	}
+
 	#nestedBrackets: RegExp = new RegExp("(?<before>.*):\\[(?<css>.*)\\]");
 
 	isNestingRegex(x = this.texte): x is Regex {
 		return this.#nestedBrackets.test(x);
 	}
-	//#forLoopIncreament = 0;
-	get numberOfBrackets(): NonNullable<number> {
-		if ((this._texte.match(/\[/g) || []).length === (this._texte.match(/\]/g) || []).length) {
-			return (this._texte.match(/\[/g) || []).length;
-		}
-		throw new Error("regex number issue [ != ]");
-	}
+
 
 
 	PredicatRegex(input: string): input is Regex {
 		return this.regex.isRegexTest.test(input);
 	}
-	checkIfRegex(x: Regex | string): void {
-		if (!this.PredicatRegex(x)) {
-			console.log("its not regex🔸🔸");
-			this.sendToMap("noRegex", x);
+	checkIfRegexAndSendToMAP(x: Regex | string): void {
+		function sendToMap(name: "isRegex" | "noRegex", x: string) {
+			eliminerUndefined<Set<string>>(TempMap.get(name))
+			return TempMap.get(name)?.add(x);
+		}
+		this.PredicatRegex(x) ? sendToMap("isRegex", x) : sendToMap("noRegex", x);
+	}
+	mapGet<T extends Set<string>>(params: "isRegex" | "noRegex", msg?: string): T {
+		if (TempMap.get(params) instanceof Set && TempMap.has(params)) {
+			const result = TempMap.has(params) && TempMap.get(params);
+			eliminerUndefined<T>(result, msg);
+			return result
 		} else {
-			this.sendToMap("isRegex", x);
-
+			throw new Error(`this.TempMap.has(params) ${msg}`);
 		}
 	}
-	sendToMap(name: "isRegex" | "noRegex", x: string) {
-		TempMap.get(name)?.add(x);
-	}
-
 	regex = {
 		isRegexTest: new RegExp(":\\["),
 		before: new RegExp("^(?<before>.*?)(?=:\\[)"),
@@ -66,6 +61,7 @@ class IfRegex {
 	createObjectFromRegex(regexVariable: string): Set<string> {
 		this.PredicatRegex(regexVariable);
 		const matchFn = (x: RegExp) => {
+
 			const temp = regexVariable.match(x)?.[1]
 			eliminerUndefined<string>(temp)
 			return temp
@@ -73,57 +69,48 @@ class IfRegex {
 		const obj = {
 			before: matchFn(this.regex.before),
 			css: matchFn(this.regex.css),
+			merged(x:string):string[] {
+				return split(x,":")
+			}
+		
 		};
-
-		//? mettre tempcss en un set afin eviter les duplicatae
-		/**
-		 * todo: mettre tempcss en un set afin eviter les duplicatae
-		 */
-
 		const tempCss = splitString(obj.css);
-		// return tempCss?.forEach((e) => `${obj.before}:${e}`);
 		const returnSet = new Set<string>();
 		for (const e of tempCss) {
 			returnSet.add(`${obj.before}:${e}`)
 		}
 		return returnSet
 	}
-	forloop() {
-
+	forloop(): void {
 		const set = splitString(this._texte);
 		for (const iterator of set) {
-			this.checkIfRegex(iterator);
+			this.checkIfRegexAndSendToMAP(iterator);
 		}
-		eliminerUndefined<Regex>(TempMap.get("isRegex"))
-		let returnString = ""
-		for (const iterator of TempMap.get("isRegex") || []) {
-			const result = this.createObjectFromRegex(iterator);
-			returnString = join(Array.from(result), ",");
-
+		for (const iterator of this.mapGet("isRegex", 'problem isregex in foorLoop')) {
+			const result: Set<string> = this.createObjectFromRegex(iterator);
+			for (const el of result) {
+				this.checkIfRegexAndSendToMAP(el);
+			}
+			this._texte &&= this.mapGet("noRegex", "problem noRegex in foorLoop");
 		}
-		this._texte = returnString
-
-
-		/// J 'ai un map avec les regex et les noRegex
-
-
+		console.log(this.mapGet("noRegex"));
 	}
 }
 
 
+/**
+ * todo: tester tous les cas possible
+ * 
+ * 
+ * 
+ */
 
+//bg-[red,focus:[green,3xl],hover:[blue]]
+const iterators = "red,hover:green,md:[orange,3xl],lg:[hover:[first:pink]]";
+const splitFromString: Set<string> = splitString(iterators);  ///good
 
-
-
-
-
-
-//bg-[red,focus:[green],hover:[blue]]
-const iterators = "xl:orange,lg:hover:[focus:[green,3xl],focusd:[green,3xl]]";
-const splited = splitString(iterators);  ///good
-
-
-for (const iterator of splited) {
+for (const iterator of splitFromString) {
+	console.log('iterator:', iterator);
 	moveToSetIfNoRegex(iterator);
 }
 
@@ -131,19 +118,9 @@ for (const iterator of TempMap?.get("isRegex") ?? []) {
 	isRegexP(iterator);
 	const aa = new IfRegex(iterator, true);
 	aa.forloop();
-	/**
-	 * j'ai pu faire le premier loop il faut mettre
-	 * la recursive pour finir
-	 * 
-	 * ! j'ai mis this.text comme string temporaire
-	 */
-
-	console.log(aa._texte)
-
-
-
-	//eliminerUndefined<string>(bb, "createObjectFromRegex est undefined");
-
-	//aa._texte = bb;
-	//console.log('texte🔸🔸 ', aa._texte);
+	//console.log(aa._texte)
 }
+const ArrayReadyToModify = finalStringProcess.makeArrayFromTempMapNoRegex()
+const AddCategory = finalStringProcess.AddCatergoryToArray(ArrayReadyToModify,'text')
+const finalString = finalStringProcess.makeFinalStringWithCategory(AddCategory)
+console.log('AddCategory ', finalString);
