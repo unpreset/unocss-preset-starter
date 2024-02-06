@@ -61,19 +61,16 @@ class IfRegex {
 	createObjectFromRegex(regexVariable: string): Set<string> {
 		this.PredicatRegex(regexVariable);
 		const matchFn = (x: RegExp) => {
-
 			const temp = regexVariable.match(x)?.[1]
 			eliminerUndefined<string>(temp)
 			return temp
 		}
 		const obj = {
 			before: matchFn(this.regex.before),
-			css: matchFn(this.regex.css),
-			merged(x:string):string[] {
-				return split(x,":")
-			}
+			css: matchFn(this.regex.css)
 		
 		};
+		console.log(obj)
 		const tempCss = splitString(obj.css);
 		const returnSet = new Set<string>();
 		for (const e of tempCss) {
@@ -82,6 +79,7 @@ class IfRegex {
 		return returnSet
 	}
 	forloop(): void {
+
 		const set = splitString(this._texte);
 		for (const iterator of set) {
 			this.checkIfRegexAndSendToMAP(iterator);
@@ -93,7 +91,7 @@ class IfRegex {
 			}
 			this._texte &&= this.mapGet("noRegex", "problem noRegex in foorLoop");
 		}
-		console.log(this.mapGet("noRegex"));
+		//console.log(this.mapGet("noRegex"));
 	}
 }
 
@@ -110,7 +108,7 @@ const iterators = "red,hover:green,md:[orange,3xl],lg:[hover:[first:pink]]";
 const splitFromString: Set<string> = splitString(iterators);  ///good
 
 for (const iterator of splitFromString) {
-	console.log('iterator:', iterator);
+	//console.log('iterator:', iterator);
 	moveToSetIfNoRegex(iterator);
 }
 
@@ -123,4 +121,9 @@ for (const iterator of TempMap?.get("isRegex") ?? []) {
 const ArrayReadyToModify = finalStringProcess.makeArrayFromTempMapNoRegex()
 const AddCategory = finalStringProcess.AddCatergoryToArray(ArrayReadyToModify,'text')
 const finalString = finalStringProcess.makeFinalStringWithCategory(AddCategory)
-console.log('AddCategory ', finalString);
+//console.log('AddCategory ', finalString);
+
+
+const arrr = ['lg', ['hover', ['first', 'pink']]]
+const arrr2 = ['lg','hover'['first', 'pink']]
+const arrr3 = [['lg', 'hover', 'first'], ['lg', 'hover', 'pink']]
