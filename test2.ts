@@ -27,12 +27,9 @@ class IfRegex {
 	}
 
 	#nestedBrackets: RegExp = new RegExp("(?<before>.*):\\[(?<css>.*)\\]");
-
 	isNestingRegex(x = this.texte): x is Regex {
 		return this.#nestedBrackets.test(x);
 	}
-
-
 
 	PredicatRegex(input: string): input is Regex {
 		return this.regex.isRegexTest.test(input);
@@ -70,9 +67,9 @@ class IfRegex {
 			css: matchFn(this.regex.css)
 		
 		};
-		console.log(obj)
 		const tempCss = splitString(obj.css);
 		const returnSet = new Set<string>();
+		//     ^?
 		for (const e of tempCss) {
 			returnSet.add(`${obj.before}:${e}`)
 		}
@@ -91,7 +88,7 @@ class IfRegex {
 			}
 			this._texte &&= this.mapGet("noRegex", "problem noRegex in foorLoop");
 		}
-		//console.log(this.mapGet("noRegex"));
+		console.log(this.mapGet("noRegex"));
 	}
 }
 
@@ -104,7 +101,7 @@ class IfRegex {
  */
 
 //bg-[red,focus:[green,3xl],hover:[blue]]
-const iterators = "red,hover:green,md:[orange,3xl],lg:[hover:[first:pink]]";
+const iterators = "red,hover:green,md:[orange,3xl],lg:[a,tt:hover:[first:pink,green]]";
 const splitFromString: Set<string> = splitString(iterators);  ///good
 
 for (const iterator of splitFromString) {
@@ -116,14 +113,12 @@ for (const iterator of TempMap?.get("isRegex") ?? []) {
 	isRegexP(iterator);
 	const aa = new IfRegex(iterator, true);
 	aa.forloop();
-	//console.log(aa._texte)
+	console.log(aa._texte)
 }
+/*
 const ArrayReadyToModify = finalStringProcess.makeArrayFromTempMapNoRegex()
 const AddCategory = finalStringProcess.AddCatergoryToArray(ArrayReadyToModify,'text')
 const finalString = finalStringProcess.makeFinalStringWithCategory(AddCategory)
 //console.log('AddCategory ', finalString);
 
-
-const arrr = ['lg', ['hover', ['first', 'pink']]]
-const arrr2 = ['lg','hover'['first', 'pink']]
-const arrr3 = [['lg', 'hover', 'first'], ['lg', 'hover', 'pink']]
+*/

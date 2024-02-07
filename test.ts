@@ -22,7 +22,7 @@ class TailwindCompressor {
 		}
 		throw new Error("regex number issue [ != ]");
 	}
-	#nestedBrackets: RegExp = new RegExp("(?<before>\\w+):\\[(?<css>.+)\\]");
+	#nestedBrackets: RegExp = new RegExp("(?<before>.+):\\[(?<css>.+)\\]");
 
 	isNestingRegex(x = this.texte): x is Regex {
 		return this.#nestedBrackets.test(x);

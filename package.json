@@ -48,6 +48,8 @@
     "prepublishOnly": "pnpm run build",
     "build": "wireit",
     "dev": "bun --watch run test.ts",
+    "dev2": "clear && bun --watch run test2.ts",
+    "dev3": "clear && bun --watch run test3.ts",
     "release": "wireit",
     "format": "wireit",
     "bump": "./bump.sh",
