@@ -1,21 +1,10 @@
 import { join, replace, split } from "string-ts";
-import { splitString, filterRegexOnly, eliminerUndefined, errorNoRegex, splitInsideBrakets, moveToSetIfNoRegex, TempMap, isRegexP, pipe, finalStringProcess } from "./src/netingRules/utils";
-type MatchRegex = {
-	Before: Before[];
-	css: string;
-};
-
-const tempSet = new Set<string>();
-
-
+import { splitString,  eliminerUndefined, moveToSetIfNoRegex, TempMap, isRegexP, finalStringProcess } from "./src/netingRules/utils";
 
 class IfRegex {
 	texte: string;
-	recursive? = true;
-
-	constructor(texte: Regex, recurs: boolean) {
+	constructor(texte: Regex) {
 		this.texte = texte;
-		this.recursive = recurs;
 	}
 	get _texte(): string {
 		if (this.texte === undefined) throw new Error("this.texte is undefined");
@@ -62,20 +51,19 @@ class IfRegex {
 			eliminerUndefined<string>(temp)
 			return temp
 		}
-		const obj = {
+		const obj:Record<"before" | "css", string> = {
 			before: matchFn(this.regex.before),
 			css: matchFn(this.regex.css)
 		
 		};
 		const tempCss = splitString(obj.css);
 		const returnSet = new Set<string>();
-		//     ^?
 		for (const e of tempCss) {
 			returnSet.add(`${obj.before}:${e}`)
 		}
 		return returnSet
 	}
-	forloop(): void {
+	forloop() {
 
 		const set = splitString(this._texte);
 		for (const iterator of set) {
@@ -88,37 +76,29 @@ class IfRegex {
 			}
 			this._texte &&= this.mapGet("noRegex", "problem noRegex in foorLoop");
 		}
-		console.log(this.mapGet("noRegex"));
+		
 	}
 }
 
 
-/**
- * todo: tester tous les cas possible
- * 
- * 
- * 
- */
 
-//bg-[red,focus:[green,3xl],hover:[blue]]
-const iterators = "red,hover:green,md:[orange,3xl],lg:[a,tt:hover:[first:pink,green]]";
-const splitFromString: Set<string> = splitString(iterators);  ///good
-
-for (const iterator of splitFromString) {
-	//console.log('iterator:', iterator);
-	moveToSetIfNoRegex(iterator);
+export const test2 = (category:Category,x:string) => {
+	
+	
+	const splitFromString: Set<string> = splitString(x);  ///good
+	
+	for (const iterator of splitFromString) {
+		moveToSetIfNoRegex(iterator);
+	}
+	
+	for (const iterator of TempMap?.get("isRegex") ?? []) {
+		isRegexP(iterator);
+		const aa = new IfRegex(iterator);
+		aa.forloop();
+	}
+	
+	const ArrayReadyToModify = finalStringProcess.makeArrayFromTempMapNoRegex()
+	const AddCategory = finalStringProcess.AddCatergoryToArray(ArrayReadyToModify,category)
+	const finalString = finalStringProcess.makeFinalStringWithCategory(AddCategory)
+	return finalString
 }
-
-for (const iterator of TempMap?.get("isRegex") ?? []) {
-	isRegexP(iterator);
-	const aa = new IfRegex(iterator, true);
-	aa.forloop();
-	console.log(aa._texte)
-}
-/*
-const ArrayReadyToModify = finalStringProcess.makeArrayFromTempMapNoRegex()
-const AddCategory = finalStringProcess.AddCatergoryToArray(ArrayReadyToModify,'text')
-const finalString = finalStringProcess.makeFinalStringWithCategory(AddCategory)
-//console.log('AddCategory ', finalString);
-
-*/

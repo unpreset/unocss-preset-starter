@@ -1,9 +1,11 @@
 import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
 import { replace } from "string-ts";
-import Tailwind from "./netingRules";
+//import Tailwind from "./netingRules";
 import { numberRemOrString, sizeRegex } from "./size";
 import { removeDuplicateArrayPaddingOrMargin } from "./utils";
+import { test2 } from "../test2";
+import { removeDuplicates } from "./netingRules/utils";
 
 const Category: Readonly<Category[]> = ["col", "row", "grid", "font", "text", "bg", "border", "stroke", "outline", "underline", "ring", "divide"];
 
@@ -87,7 +89,8 @@ const unocssPresetWindExtra = definePreset((): Preset => {
 			[
 				new RegExp(`^(p|m)-${sizeRegex.numberOrBracket.source}-${sizeRegex.numberOrBracket.source}-?${sizeRegex.numberOrBracket.source}?-?${sizeRegex.numberOrBracket.source}?-?${sizeRegex.numberOrBracket.source}?$`),
 				(match) => {
-					const [PaddingOrMargin, ...t_r_b_l] = sizeRegex.cleanerARRAY(match);
+
+					const [PaddingOrMargin, ...t_r_b_l]: string[] = sizeRegex.cleanerARRAY(match);
 					type isPad<T extends typeof PaddingOrMargin> = T extends "m" ? false : true;
 					const isPadding = (<T extends typeof PaddingOrMargin>(x: T) => {
 						return (x === "p") as isPad<"p">;
@@ -126,7 +129,7 @@ const unocssPresetWindExtra = definePreset((): Preset => {
 				new RegExp(`^inset-(x|y)-(${sizeRegex.numberOrBracket.source}-?(${sizeRegex.numberOrBracket.source})?)$`),
 				(match: string[]) => {
 					const [direction, ...valueRegex] = sizeRegex.cleanerARRAY(match) as ["x" | "y", ...string[]];
-					const [s, optional] = [...new Set(valueRegex)];
+					const [s, optional] = removeDuplicates(valueRegex); //[...new Set(valueRegex)];
 					const combination = {
 						x: "inset-inline",
 						y: "inset-block",
@@ -203,7 +206,7 @@ const unocssPresetWindExtra = definePreset((): Preset => {
 				new RegExp(`^(${Category.join("|")})-\\[(.*)\\]$`),
 				(match): string => {
 					const [, category, stringElement] = match as [unknown, Category, string];
-					return Tailwind(category, stringElement);
+					return test2(category, stringElement);
 				},
 			],
 		] as Shortcut[],

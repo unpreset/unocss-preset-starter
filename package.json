@@ -1,7 +1,7 @@
 {
   "name": "unocss-preset-wind-extra",
   "type": "module",
-  "version": "1.0.34",
+  "version": "1.2.0",
   "packageManager": "pnpm@8.7.0",
   "description": "Improve tailwind unocss to reduce length of classes",
   "author": "Jonathan <https://github.com/unpreset>",
@@ -49,7 +49,6 @@
     "build": "wireit",
     "dev": "bun --watch run test.ts",
     "dev2": "clear && bun --watch run test2.ts",
-    "dev3": "clear && bun --watch run test3.ts",
     "release": "wireit",
     "format": "wireit",
     "bump": "./bump.sh",
@@ -90,7 +89,7 @@
       ]
     },
     "release": {
-      "command": "pnpm publish --dry-run --no-git-checks",
+      "command": "npm publish --dry-run --no-git-checks",
       "clean": false,
       "dependencies": [
         "format"

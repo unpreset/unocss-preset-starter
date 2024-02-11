@@ -15,3 +15,4 @@ type fraction<F extends string> = F extends `${number}/${number}` ? `${number}%`
 export type IsNumberP<N> = N extends `${number}` ? `${string}rem` : never;
 export type ReturnDico<P extends string> = P extends SizeKeys ? SizeType[P] : never;
 export type BeforeInArr<A extends unknown[]> = A extends [...infer B, infer C] ? B : never;
+export type CssInArr<A extends unknown[]> = A extends [...infer B, infer C] ? C : never;
