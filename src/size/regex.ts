@@ -12,7 +12,9 @@ export const sizeRegex = {
 	},
 
 	cleanerARRAY<A extends string[]>(arr: A): IsARRAy<A> {
+		
 		if (Array.isArray(arr)) {
+
 			const exceptInArray = ["-", "["];
 			return arr?.filter((x: string) => !exceptInArray.some((d) => x.includes(d))) as IsARRAy<A>;
 		}

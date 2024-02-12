@@ -1,4 +1,4 @@
-import { removeDuplicates, splitInsideBrakets, regex } from "./utils";
+import { removeDuplicates, splitInsideBrakets, regex, eliminerUndefined } from "./utils";
 import { split } from "string-ts";
 /**
  * @description   groups: { before: 'lg:hover', cssInside: 'first:red-100,last:green' } ]
@@ -10,9 +10,12 @@ function nestedElement(x: string): NestedElementResult | Omit<NestedElementResul
 		const obj = {
 			_before: match?.groups?.before,
 			_string: match?.groups?.cssInside,
-
+			
+		
 			get beforefn(): Array<string> {
 				if (this._before) {
+					eliminerUndefined<Before>(this._before)
+
 					return removeDuplicates(split(this._before, ":"));
 				}
 				return [];
@@ -41,5 +44,5 @@ function nestedElement(x: string): NestedElementResult | Omit<NestedElementResul
 }
 
 export default nestedElement;
-const rez = nestedElement('lg:hover:[red,lg:hover:red]')
+const rez = nestedElement("lg:hover:[red,lg:hover:red]");
 console.log(rez);

@@ -1,11 +1,12 @@
 import { definePreset } from "@unocss/core";
 import type { Preset, Rule, Shortcut } from "unocss";
 import { replace } from "string-ts";
-//import Tailwind from "./netingRules";
 import { numberRemOrString, sizeRegex } from "./size";
 import { removeDuplicateArrayPaddingOrMargin } from "./utils";
-import { test2 } from "../test2";
+
 import { removeDuplicates } from "./netingRules/utils";
+import test2 from "../test2";
+
 
 const Category: Readonly<Category[]> = ["col", "row", "grid", "font", "text", "bg", "border", "stroke", "outline", "underline", "ring", "divide"];
 
@@ -209,6 +210,7 @@ const unocssPresetWindExtra = definePreset((): Preset => {
 					return test2(category, stringElement);
 				},
 			],
+			
 		] as Shortcut[],
 	};
 });

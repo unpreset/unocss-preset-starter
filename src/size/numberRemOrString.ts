@@ -1,6 +1,6 @@
 import size from "./size";
 //import { sizeRegex } from "./regex";
-import type { SizeKeys, ReturnDico, IsNumberP, Finish } from "./types";
+import type { SizeKeys } from "./types";
 //import type fraction from "./fraction";
 
 /**

@@ -82,7 +82,7 @@ class IfRegex {
 
 
 
-export const test2 = (category:Category,x:string) => {
+ const test2 = (category:Category,x:string) => {
 	
 	
 	const splitFromString: Set<string> = splitString(x);  ///good
@@ -102,3 +102,4 @@ export const test2 = (category:Category,x:string) => {
 	const finalString = finalStringProcess.makeFinalStringWithCategory(AddCategory)
 	return finalString
 }
+export default test2;

@@ -1,7 +1,7 @@
 {
   "name": "unocss-preset-wind-extra",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.54",
   "packageManager": "pnpm@8.7.0",
   "description": "Improve tailwind unocss to reduce length of classes",
   "author": "Jonathan <https://github.com/unpreset>",
@@ -61,19 +61,19 @@
     "@unocss/core": "< 1"
   },
   "devDependencies": {
-    "@babel/types": "^7.23.0",
+    "@babel/types": "^7.23.9",
     "@biomejs/biome": "1.3.3",
-    "@types/node": "^20.7.0",
-    "@unocss/preset-wind": "^0.57.7",
-    "@vitejs/plugin-vue": "^4.3.4",
-    "bun-types": "^1.0.14",
+    "@types/node": "^20.11.17",
+    "@unocss/preset-wind": "^0.58.5",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "bun-types": "^1.0.26",
     "typescript": "5.2.2",
     "unbuild": "^2.0.0",
-    "unocss": "^0.57.7",
+    "unocss": "^0.58.5",
     "unocss-preset-wind-extra": "latest",
     "vite": "latest",
     "vitest": "latest",
-    "wireit": "^0.14.1",
+    "wireit": "^0.14.4",
     "bumpp": "latest"
   },
   "dependencies": {
@@ -89,7 +89,7 @@
       ]
     },
     "release": {
-      "command": "npm publish --dry-run --no-git-checks",
+      "command": "npm publish --no-git-checks",
       "clean": false,
       "dependencies": [
         "format"

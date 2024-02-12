@@ -1,6 +1,6 @@
 type regexArray = RegExpMatchArray | null;
 type Category = "col" | "row" | "grid" | "font" | "text" | "bg" | "border" | "stroke" | "outline" | "underline" | "ring" | "divide";
-type currentElement<T extends boolean> = T extends true ? "" : string;
+type currentElement<T extends number> = T extends 0 ? "" : string;
 
 type Before =
 	| "hover"
@@ -108,7 +108,7 @@ type inff<T extends string> = T extends `bg-${infer N extends string}` ? N : nev
 
 type LastOrString<Type extends string | string[]> = Type extends unknown[] ? LastInArray<Type> : Type;
 
-type LastOfArray<T extends any[]> = T extends [...T[number], infer U] ? U : never;
+type LastOfArray<T extends []> = T extends [...T[number], infer U] ? U : never;
 type Pop<T extends unknown[]> = T extends [...infer R, infer _] ? R : never;
 type Regex = `${string}:[${string}]`;
 
@@ -128,3 +128,26 @@ interface ReturnFlex {
 	"align-items": "start" | "center" | "end";
 }
 type UnionValueDictionary<T extends Record<string, string>> = T[keyof T];
+
+/**
+ * obj pour nested il permet de faire a partir d'un array un obj 
+ * avec tout dedans before,cat,css*
+ */
+type MakeObjBeforeCatCss<T extends string[]> = T extends [infer A, infer B]
+	? A extends Category ? base<A, B> : never :
+	T extends [...infer F, infer G, infer H]
+	? F extends Before[]
+	? G extends Category
+	? base<G, H> & BeforeObj<F> : never : never : never
+
+type testObj = MakeObjBeforeCatCss<["bg","red"]>	
+
+
+type BeforeObj<T extends Before[]> = {
+	BEFORE: T
+}
+
+type base<T, K> = {
+	CATEGORY: T;
+	CSS: K;
+}
