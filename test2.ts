@@ -63,7 +63,7 @@ class IfRegex {
 		}
 		return returnSet
 	}
-	forloop() {
+	forloop():void {
 
 		const set = splitString(this._texte);
 		for (const iterator of set) {
@@ -82,7 +82,7 @@ class IfRegex {
 
 
 
- const test2 = (category:Category,x:string) => {
+ function test2 (category:Category,x:string):string {
 	
 	
 	const splitFromString: Set<string> = splitString(x);  ///good
@@ -99,7 +99,6 @@ class IfRegex {
 	
 	const ArrayReadyToModify = finalStringProcess.makeArrayFromTempMapNoRegex()
 	const AddCategory = finalStringProcess.AddCatergoryToArray(ArrayReadyToModify,category)
-	const finalString = finalStringProcess.makeFinalStringWithCategory(AddCategory)
-	return finalString
+	return finalStringProcess.makeFinalStringWithCategory(AddCategory)
 }
 export default test2;
