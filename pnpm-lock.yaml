@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@unocss/core':
+        specifier: ^0.62.3
+        version: 0.62.3
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.27.1

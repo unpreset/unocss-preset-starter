@@ -1,4 +1,4 @@
-import { definePreset } from 'unocss'
+import { definePreset } from '@unocss/core'
 
 export interface StarterOptions {
   /**

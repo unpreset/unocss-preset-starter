@@ -54,6 +54,9 @@
     "play": "vite playground",
     "deploy": "vite build playground"
   },
+  "dependencies": {
+    "@unocss/core": "^0.62.3"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.27.1",
     "@babel/types": "^7.25.4",
